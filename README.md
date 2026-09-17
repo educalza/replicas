@@ -65,3 +65,32 @@ curl -H 'X-Client-ID: cliente-a' http://localhost:5000/read/produto1
 
 Respostas usam `200` em caso de sucesso, `400` para requisicao invalida e
 `404` quando a rota ou a chave nao existe.
+
+## Benchmark com YCSB
+
+O binding `coordenador` usa `POST /write` para `insert` e `update`, e
+`GET /read` para `read`. Cada thread envia um `X-Client-ID` estavel, necessario
+para o modo `ryw`. As chaves sao prefixadas com o nome da tabela YCSB.
+
+Requer Java e Maven. Com as tres replicas e o coordenador em execucao, rode:
+
+```bash
+cd YCSB-master
+mvn -pl coordenador -am package -DskipTests
+./bin/ycsb load coordenador -P coordenador/workload -threads 8 \
+  -p coordenador.url=http://127.0.0.1:5000
+./bin/ycsb run coordenador -P coordenador/workload -threads 8 \
+  -p coordenador.url=http://127.0.0.1:5000
+```
+
+Para medir somente leituras, acrescente `-p readproportion=1 -p updateproportion=0`
+ao comando `run`. Para somente escritas, use
+`-p readproportion=0 -p updateproportion=1`. O `load` deve ser executado antes
+do teste de leitura. Ajuste `recordcount`, `operationcount` e `-threads` para
+o experimento. O resultado `[OVERALL], Throughput(ops/sec)` mostra as operacoes
+por segundo; confira tambem as contagens `OK` e de erros por operacao.
+
+O binding oferece `-p coordenador.timeout.ms=5000` para ajustar o tempo limite
+HTTP em milissegundos. `scan` e `delete` nao sao implementados porque a API do
+coordenador nao oferece essas operacoes. O workload fornecido usa um campo por
+registro, pois cada `write` substitui o valor inteiro da chave.
