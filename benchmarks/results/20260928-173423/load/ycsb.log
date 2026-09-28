@@ -1,0 +1,13 @@
+Command line: -load -s -db site.ycsb.db.CoordenadorClient -P C:\codigos\replicas\YCSB-master\coordenador\workload -threads 1 -p coordenador.url=http://127.0.0.1:58357 -p recordcount=1000 -p operationcount=1000 -p readproportion=0 -p updateproportion=1 -p measurementtype=hdrhistogram -p exportfile=C:\codigos\replicas\benchmarks\results\20260928-173423\load\metrics.txt -p status.interval=10
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+2026-09-28 17:34:24:752 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-28 17:34:34:754 10 sec: 114 operations; 11,4 current ops/sec; est completion in 1 minute [INSERT: Count=114, Max=200191, Min=26336, Avg=86981,19, 50=81727, 90=138367, 99=175871, 99.9=200191, 99.99=200191] 
+2026-09-28 17:34:44:763 20 sec: 215 operations; 10,09 current ops/sec; est completion in 1 minute [INSERT: Count=101, Max=191103, Min=57632, Avg=98518,02, 50=91903, 90=132735, 99=173695, 99.9=191103, 99.99=191103] 
+2026-09-28 17:34:54:766 30 sec: 306 operations; 9,1 current ops/sec; est completion in 1 minute [INSERT: Count=91, Max=232831, Min=64672, Avg=110137,32, 50=100799, 90=156159, 99=232831, 99.9=232831, 99.99=232831] 
+2026-09-28 17:35:04:762 40 sec: 377 operations; 7,1 current ops/sec; est completion in 1 minute [INSERT: Count=71, Max=253951, Min=93376, Avg=139755,27, 50=134911, 90=198783, 99=253951, 99.9=253951, 99.99=253951] 
+Error inserting, not retrying any more. number of attempts: 1Insertion Retry Limit: 0
+2026-09-28 17:35:09:757 45 sec: 419 operations; 8,41 current ops/sec; est completion in 1 minute [CLEANUP: Count=1, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] [INSERT: Count=42, Max=184703, Min=85120, Avg=120078,48, 50=115199, 90=164991, 99=184703, 99.9=184703, 99.99=184703] [INSERT-FAILED: Count=1, Max=71743, Min=71680, Avg=71712, 50=71743, 90=71743, 99=71743, 99.9=71743, 99.99=71743] 

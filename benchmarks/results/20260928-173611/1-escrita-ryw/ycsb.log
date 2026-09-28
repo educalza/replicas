@@ -1,0 +1,12 @@
+Command line: -t -s -db site.ycsb.db.CoordenadorClient -P C:\codigos\replicas\YCSB-master\coordenador\workload -threads 8 -p coordenador.url=http://127.0.0.1:59015 -p recordcount=1000 -p operationcount=1000 -p readproportion=0 -p updateproportion=1 -p measurementtype=hdrhistogram -p exportfile=C:\codigos\replicas\benchmarks\results\20260928-173611\1-escrita-ryw\metrics.txt -p status.interval=10
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+2026-09-28 18:03:37:296 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-28 18:03:47:303 10 sec: 197 operations; 19,69 current ops/sec; est completion in 41 seconds [UPDATE-FAILED: Count=2, Max=55903, Min=55872, Avg=55888, 50=55903, 90=55903, 99=55903, 99.9=55903, 99.99=55903] [UPDATE: Count=195, Max=592383, Min=129152, Avg=399656,21, 50=398847, 90=476415, 99=579071, 99.9=592383, 99.99=592383] 
+2026-09-28 18:03:57:298 20 sec: 405 operations; 20,81 current ops/sec; est completion in 30 seconds [UPDATE-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] [UPDATE: Count=208, Max=797183, Min=216192, Avg=386660,31, 50=375295, 90=507391, 99=772095, 99.9=797183, 99.99=797183] 
+2026-09-28 18:04:07:312 30 sec: 697 operations; 29,16 current ops/sec; est completion in 14 seconds [UPDATE-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] [UPDATE: Count=292, Max=508159, Min=166784, Avg=275239,89, 50=264703, 90=346111, 99=479487, 99.9=508159, 99.99=508159] 
+2026-09-28 18:04:17:307 40 sec: 970 operations; 27,31 current ops/sec; est completion in 2 second [UPDATE-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] [UPDATE: Count=273, Max=803839, Min=167936, Avg=293656,38, 50=266495, 90=388607, 99=790015, 99.9=803839, 99.99=803839] 
+2026-09-28 18:04:18:351 41 sec: 1000 operations; 28,74 current ops/sec; [UPDATE-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] [CLEANUP: Count=8, Max=1, Min=0, Avg=0,38, 50=0, 90=1, 99=1, 99.9=1, 99.99=1] [UPDATE: Count=30, Max=335103, Min=175616, Avg=267946,67, 50=276223, 90=317439, 99=335103, 99.9=335103, 99.99=335103] 

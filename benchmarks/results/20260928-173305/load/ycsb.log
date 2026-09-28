@@ -1,0 +1,14 @@
+Command line: -load -s -db site.ycsb.db.CoordenadorClient -P C:\codigos\replicas\YCSB-master\coordenador\workload -threads 8 -p coordenador.url=http://127.0.0.1:51473 -p recordcount=1000 -p operationcount=10000 -p readproportion=0 -p updateproportion=1 -p measurementtype=hdrhistogram -p exportfile=C:\codigos\replicas\benchmarks\results\20260928-173305\load\metrics.txt -p status.interval=10
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+2026-09-28 17:33:07:252 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+Error inserting, not retrying any more. number of attempts: 1Insertion Retry Limit: 0
+Error inserting, not retrying any more. number of attempts: 1Insertion Retry Limit: 0
+2026-09-28 17:33:17:253 10 sec: 22 operations; 2,2 current ops/sec; est completion in 7 minutes [CLEANUP: Count=2, Max=2, Min=1, Avg=1,5, 50=1, 90=2, 99=2, 99.9=2, 99.99=2] [INSERT: Count=22, Max=749055, Min=332800, Avg=461504, 50=450047, 90=541183, 99=749055, 99.9=749055, 99.99=749055] [INSERT-FAILED: Count=2, Max=193535, Min=193152, Avg=193344, 50=193279, 90=193535, 99=193535, 99.9=193535, 99.99=193535] 
+Error inserting, not retrying any more. number of attempts: 1Insertion Retry Limit: 0
+Error inserting, not retrying any more. number of attempts: 1Insertion Retry Limit: 0
+2026-09-28 17:33:27:253 20 sec: 101 operations; 7,9 current ops/sec; est completion in 2 minutes [CLEANUP: Count=2, Max=1, Min=1, Avg=1, 50=1, 90=1, 99=1, 99.9=1, 99.99=1] [INSERT: Count=79, Max=808959, Min=412160, Avg=562568,1, 50=543231, 90=720383, 99=808959, 99.9=808959, 99.99=808959] [INSERT-FAILED: Count=2, Max=537087, Min=515072, Avg=526016, 50=515327, 90=537087, 99=537087, 99.9=537087, 99.99=537087] 
+2026-09-28 17:33:37:266 30 sec: 150 operations; 4,89 current ops/sec; est completion in 2 minutes [CLEANUP: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] [INSERT: Count=49, Max=1718271, Min=328960, Avg=813066,45, 50=772607, 90=1229823, 99=1718271, 99.9=1718271, 99.99=1718271] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 

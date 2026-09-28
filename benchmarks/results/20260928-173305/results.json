@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "records": 1000,
+    "operations": 10000,
+    "threads": 8,
+    "repetitions": 1,
+    "delay": 1.0,
+    "started_utc": "2026-09-28T20:33:05.666879+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "java_version": "java version \"21.0.7\" 2025-04-15 LTS\nJava(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)\n",
+    "source_sha256": {
+      "coordenador.py": "45a71b268d5262ba19bf744daccf7c26cfa7c9c0cbfb216ee98b4bf44bd75ea9",
+      "replica.py": "bf31b4ac220c87fa8f9cb0869111b8d0f5f6f719f16a7abaf6900b1b7195c651"
+    }
+  },
+  "results": []
+}

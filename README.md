@@ -106,6 +106,11 @@ significa cancelamento: a escrita pode ser concluida pelas novas tentativas.
 
 ## Benchmark com YCSB
 
+Para executar automaticamente os tres modos com leitura, escrita e carga mista,
+gerando uma tabela de comparacao, consulte [benchmarks/README.md](benchmarks/README.md).
+O executor usa dados e processos separados dos servidores iniciados manualmente.
+Veja a [comparacao executada dos tres modos](benchmarks/README.md#comparacao-executada).
+
 O binding `coordenador` usa `POST /write` para `insert` e `update`, e
 `GET /read` para `read`. Cada thread envia um `X-Client-ID` estavel, necessario
 para o modo `ryw`. As chaves sao prefixadas com o nome da tabela YCSB.

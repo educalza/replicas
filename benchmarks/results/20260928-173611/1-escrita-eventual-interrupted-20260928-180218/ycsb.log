@@ -1,0 +1,9 @@
+Command line: -t -s -db site.ycsb.db.CoordenadorClient -P C:\codigos\replicas\YCSB-master\coordenador\workload -threads 8 -p coordenador.url=http://127.0.0.1:49683 -p recordcount=1000 -p operationcount=1000 -p readproportion=0 -p updateproportion=1 -p measurementtype=hdrhistogram -p exportfile=C:\codigos\replicas\benchmarks\results\20260928-173611\1-escrita-eventual\metrics.txt -p status.interval=10
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+2026-09-28 17:42:55:480 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-28 17:43:05:489 10 sec: 78 operations; 7,79 current ops/sec; est completion in 1 minute [UPDATE: Count=78, Max=2095103, Min=269824, Avg=992640, 50=907263, 90=1527807, 99=2095103, 99.9=2095103, 99.99=2095103] 
+2026-09-28 17:43:15:494 20 sec: 148 operations; 7 current ops/sec; est completion in 1 minute [UPDATE: Count=70, Max=2246655, Min=522240, Avg=1135701,94, 50=913919, 90=1742847, 99=2246655, 99.9=2246655, 99.99=2246655] 

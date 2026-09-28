@@ -1,0 +1,10 @@
+Command line: -t -s -db site.ycsb.db.CoordenadorClient -P C:\codigos\replicas\YCSB-master\coordenador\workload -threads 8 -p coordenador.url=http://127.0.0.1:51549 -p recordcount=1000 -p operationcount=1000 -p readproportion=0.5 -p updateproportion=0.5 -p measurementtype=hdrhistogram -p exportfile=C:\codigos\replicas\benchmarks\results\20260928-173611\1-misto-ryw\metrics.txt -p status.interval=10
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+2026-09-28 18:07:15:725 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-28 18:07:25:733 10 sec: 429 operations; 42,87 current ops/sec; est completion in 14 seconds [READ: Count=225, Max=215167, Min=3360, Avg=46877,15, 50=34495, 90=96959, 99=186111, 99.9=215167, 99.99=215167] [UPDATE: Count=204, Max=563711, Min=79680, Avg=335886,43, 50=339711, 90=466943, 99=538623, 99.9=563711, 99.99=563711] 
+2026-09-28 18:07:35:728 20 sec: 797 operations; 36,82 current ops/sec; est completion in 6 second [READ: Count=175, Max=180351, Min=4312, Avg=42077,23, 50=33183, 90=85439, 99=154879, 99.9=180351, 99.99=180351] [UPDATE: Count=193, Max=594431, Min=189440, Avg=370885,64, 50=362239, 90=505343, 99=579071, 99.9=594431, 99.99=594431] 
+2026-09-28 18:07:41:003 25 sec: 1000 operations; 38,48 current ops/sec; [READ: Count=106, Max=174591, Min=4616, Avg=39012,28, 50=27999, 90=84671, 99=156159, 99.9=174591, 99.99=174591] [CLEANUP: Count=8, Max=1, Min=0, Avg=0,62, 50=1, 90=1, 99=1, 99.9=1, 99.99=1] [UPDATE: Count=97, Max=526335, Min=20352, Avg=299572,78, 50=307711, 90=460287, 99=526335, 99.9=526335, 99.99=526335] 

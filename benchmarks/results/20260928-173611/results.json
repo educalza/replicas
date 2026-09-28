@@ -1,0 +1,865 @@
+{
+  "metadata": {
+    "records": 1000,
+    "operations": 1000,
+    "threads": 8,
+    "repetitions": 1,
+    "delay": 1.0,
+    "started_utc": "2026-09-28T20:36:11.237476+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]",
+    "java_version": "java version \"21.0.7\" 2025-04-15 LTS\nJava(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)\n",
+    "source_sha256": {
+      "coordenador.py": "45a71b268d5262ba19bf744daccf7c26cfa7c9c0cbfb216ee98b4bf44bd75ea9",
+      "replica.py": "bf31b4ac220c87fa8f9cb0869111b8d0f5f6f719f16a7abaf6900b1b7195c651"
+    },
+    "baseline_sha256": "3249f7d99efb4bccf3b7d13cb42784fbe877ad4b16efcfbe9df33a31435b2026",
+    "load": {
+      "ops_sec": 7.649236606186703,
+      "runtime_seconds": 130.732,
+      "ok": 1000,
+      "errors": 3,
+      "total": 1003,
+      "status_counts": {
+        "INSERT/OK": 1000,
+        "INSERT/SERVICE_UNAVAILABLE": 3
+      },
+      "read_mean_ms": null,
+      "read_p95_ms": null,
+      "update_mean_ms": null,
+      "update_p95_ms": null
+    },
+    "resumed_utc": [
+      "2026-09-28T21:02:18.124680+00:00"
+    ],
+    "finished_utc": "2026-09-28T21:07:57.342731+00:00"
+  },
+  "results": [
+    {
+      "ops_sec": 28.161081385525204,
+      "runtime_seconds": 35.51,
+      "ok": 1000,
+      "errors": 0,
+      "total": 1000,
+      "status_counts": {
+        "READ/OK": 1000
+      },
+      "read_mean_ms": 282.528288,
+      "read_p95_ms": 389.887,
+      "update_mean_ms": null,
+      "update_p95_ms": null,
+      "profile": "leitura",
+      "mode": "strong",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 0.004456399998161942,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 35510.0,
+          "Throughput(ops/sec)": 28.161081385525204
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 9.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.025344973246972685
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 9.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.025344973246972685
+        },
+        "READ": {
+          "Operations": 1000.0,
+          "AverageLatency(us)": 282528.288,
+          "MinLatency(us)": 112192.0,
+          "MaxLatency(us)": 482559.0,
+          "50thPercentileLatency(us)": 282111.0,
+          "95thPercentileLatency(us)": 389887.0,
+          "99thPercentileLatency(us)": 435967.0,
+          "Return=OK": 1000.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 1.0,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 3.0,
+          "50thPercentileLatency(us)": 1.0,
+          "95thPercentileLatency(us)": 3.0,
+          "99thPercentileLatency(us)": 3.0
+        }
+      }
+    },
+    {
+      "ops_sec": 214.27040925648168,
+      "runtime_seconds": 4.667,
+      "ok": 998,
+      "errors": 2,
+      "total": 1000,
+      "status_counts": {
+        "READ/OK": 998,
+        "READ/ERROR": 2
+      },
+      "read_mean_ms": 33.953417835671345,
+      "read_p95_ms": 86.207,
+      "update_mean_ms": null,
+      "update_p95_ms": null,
+      "profile": "leitura",
+      "mode": "eventual",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 0.04956799995852634,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 4667.0,
+          "Throughput(ops/sec)": 214.27040925648168
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 9.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.19284336833083351
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 9.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.19284336833083351
+        },
+        "READ": {
+          "Operations": 998.0,
+          "AverageLatency(us)": 33953.417835671346,
+          "MinLatency(us)": 4004.0,
+          "MaxLatency(us)": 126079.0,
+          "50thPercentileLatency(us)": 27727.0,
+          "95thPercentileLatency(us)": 86207.0,
+          "99thPercentileLatency(us)": 112959.0,
+          "Return=OK": 998.0,
+          "Return=ERROR": 2.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 3.875,
+          "MinLatency(us)": 2.0,
+          "MaxLatency(us)": 11.0,
+          "50thPercentileLatency(us)": 3.0,
+          "95thPercentileLatency(us)": 11.0,
+          "99thPercentileLatency(us)": 11.0
+        },
+        "READ-FAILED": {
+          "Operations": 2.0,
+          "AverageLatency(us)": 16528.0,
+          "MinLatency(us)": 16512.0,
+          "MaxLatency(us)": 16543.0,
+          "50thPercentileLatency(us)": 16527.0,
+          "95thPercentileLatency(us)": 16543.0,
+          "99thPercentileLatency(us)": 16543.0
+        }
+      }
+    },
+    {
+      "ops_sec": 218.8662727073758,
+      "runtime_seconds": 4.569,
+      "ok": 998,
+      "errors": 2,
+      "total": 1000,
+      "status_counts": {
+        "READ/OK": 998,
+        "READ/ERROR": 2
+      },
+      "read_mean_ms": 30.39343486973948,
+      "read_p95_ms": 61.535,
+      "update_mean_ms": null,
+      "update_p95_ms": null,
+      "profile": "leitura",
+      "mode": "ryw",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 0.010580800008028746,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 4569.0,
+          "Throughput(ops/sec)": 218.8662727073758
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 10.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.2188662727073758
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 10.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.2188662727073758
+        },
+        "READ": {
+          "Operations": 998.0,
+          "AverageLatency(us)": 30393.434869739478,
+          "MinLatency(us)": 3438.0,
+          "MaxLatency(us)": 246783.0,
+          "50thPercentileLatency(us)": 27807.0,
+          "95thPercentileLatency(us)": 61535.0,
+          "99thPercentileLatency(us)": 84543.0,
+          "Return=OK": 998.0,
+          "Return=ERROR": 2.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 0.625,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 1.0,
+          "50thPercentileLatency(us)": 1.0,
+          "95thPercentileLatency(us)": 1.0,
+          "99thPercentileLatency(us)": 1.0
+        },
+        "READ-FAILED": {
+          "Operations": 2.0,
+          "AverageLatency(us)": 51056.0,
+          "MinLatency(us)": 47008.0,
+          "MaxLatency(us)": 55103.0,
+          "50thPercentileLatency(us)": 47039.0,
+          "95thPercentileLatency(us)": 55103.0,
+          "99thPercentileLatency(us)": 55103.0
+        }
+      }
+    },
+    {
+      "ops_sec": 4.644379835960504,
+      "runtime_seconds": 215.314,
+      "ok": 986,
+      "errors": 14,
+      "total": 1000,
+      "status_counts": {
+        "UPDATE/OK": 986,
+        "UPDATE/SERVICE_UNAVAILABLE": 8,
+        "UPDATE/ERROR": 6
+      },
+      "read_mean_ms": null,
+      "read_p95_ms": null,
+      "update_mean_ms": 1692.3529736308317,
+      "update_p95_ms": 3606.527,
+      "profile": "escrita",
+      "mode": "strong",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 0.2318669999949634,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 215314.0,
+          "Throughput(ops/sec)": 4.644379835960504
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 13.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.006037693786748655
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 13.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.006037693786748655
+        },
+        "UPDATE-FAILED": {
+          "Operations": 14.0,
+          "AverageLatency(us)": 2867994.285714286,
+          "MinLatency(us)": 50016.0,
+          "MaxLatency(us)": 5013503.0,
+          "50thPercentileLatency(us)": 1633279.0,
+          "95thPercentileLatency(us)": 5013503.0,
+          "99thPercentileLatency(us)": 5013503.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 1.625,
+          "MinLatency(us)": 1.0,
+          "MaxLatency(us)": 4.0,
+          "50thPercentileLatency(us)": 1.0,
+          "95thPercentileLatency(us)": 4.0,
+          "99thPercentileLatency(us)": 4.0
+        },
+        "UPDATE": {
+          "Operations": 986.0,
+          "AverageLatency(us)": 1692352.9736308316,
+          "MinLatency(us)": 247168.0,
+          "MaxLatency(us)": 4984831.0,
+          "50thPercentileLatency(us)": 1389567.0,
+          "95thPercentileLatency(us)": 3606527.0,
+          "99thPercentileLatency(us)": 4513791.0,
+          "Return=OK": 986.0,
+          "Return=SERVICE_UNAVAILABLE": 8.0,
+          "Return=ERROR": 6.0
+        }
+      }
+    },
+    {
+      "ops_sec": 20.949428080613398,
+      "runtime_seconds": 47.734,
+      "ok": 1000,
+      "errors": 0,
+      "total": 1000,
+      "status_counts": {
+        "UPDATE/OK": 1000
+      },
+      "read_mean_ms": null,
+      "read_p95_ms": null,
+      "update_mean_ms": 380.009792,
+      "update_p95_ms": 498.175,
+      "profile": "escrita",
+      "mode": "eventual",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 28.606851100048516,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 47734.0,
+          "Throughput(ops/sec)": 20.949428080613398
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 9.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.018854485272552058
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 9.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.018854485272552058
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 0.25,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 1.0,
+          "50thPercentileLatency(us)": 0.0,
+          "95thPercentileLatency(us)": 1.0,
+          "99thPercentileLatency(us)": 1.0
+        },
+        "UPDATE": {
+          "Operations": 1000.0,
+          "AverageLatency(us)": 380009.792,
+          "MinLatency(us)": 140032.0,
+          "MaxLatency(us)": 1046015.0,
+          "50thPercentileLatency(us)": 369407.0,
+          "95thPercentileLatency(us)": 498175.0,
+          "99thPercentileLatency(us)": 742911.0,
+          "Return=OK": 1000.0
+        }
+      }
+    },
+    {
+      "ops_sec": 24.357569114602363,
+      "runtime_seconds": 41.055,
+      "ok": 998,
+      "errors": 2,
+      "total": 1000,
+      "status_counts": {
+        "UPDATE/OK": 998,
+        "UPDATE/ERROR": 2
+      },
+      "read_mean_ms": null,
+      "read_p95_ms": null,
+      "update_mean_ms": 327.59012424849703,
+      "update_p95_ms": 497.663,
+      "profile": "escrita",
+      "mode": "ryw",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 22.062138699984644,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 41055.0,
+          "Throughput(ops/sec)": 24.357569114602363
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 13.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.03166483984898307
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 13.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.03166483984898307
+        },
+        "UPDATE-FAILED": {
+          "Operations": 2.0,
+          "AverageLatency(us)": 55888.0,
+          "MinLatency(us)": 55872.0,
+          "MaxLatency(us)": 55903.0,
+          "50thPercentileLatency(us)": 55903.0,
+          "95thPercentileLatency(us)": 55903.0,
+          "99thPercentileLatency(us)": 55903.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 0.375,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 1.0,
+          "50thPercentileLatency(us)": 0.0,
+          "95thPercentileLatency(us)": 1.0,
+          "99thPercentileLatency(us)": 1.0
+        },
+        "UPDATE": {
+          "Operations": 998.0,
+          "AverageLatency(us)": 327590.124248497,
+          "MinLatency(us)": 129152.0,
+          "MaxLatency(us)": 803839.0,
+          "50thPercentileLatency(us)": 303871.0,
+          "95thPercentileLatency(us)": 497663.0,
+          "99thPercentileLatency(us)": 724991.0,
+          "Return=OK": 998.0,
+          "Return=ERROR": 2.0
+        }
+      }
+    },
+    {
+      "ops_sec": 9.445992537665894,
+      "runtime_seconds": 105.865,
+      "ok": 1000,
+      "errors": 0,
+      "total": 1000,
+      "status_counts": {
+        "READ/OK": 502,
+        "UPDATE/OK": 498
+      },
+      "read_mean_ms": 778.9775298804781,
+      "read_p95_ms": 1297.407,
+      "update_mean_ms": 909.7344257028112,
+      "update_p95_ms": 1422.335,
+      "profile": "misto",
+      "mode": "strong",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 0.005945700046140701,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 105865.0,
+          "Throughput(ops/sec)": 9.445992537665894
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 10.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.009445992537665895
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 10.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.009445992537665895
+        },
+        "READ": {
+          "Operations": 502.0,
+          "AverageLatency(us)": 778977.529880478,
+          "MinLatency(us)": 151424.0,
+          "MaxLatency(us)": 1878015.0,
+          "50thPercentileLatency(us)": 757247.0,
+          "95thPercentileLatency(us)": 1297407.0,
+          "99thPercentileLatency(us)": 1511423.0,
+          "Return=OK": 502.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 0.5,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 1.0,
+          "50thPercentileLatency(us)": 0.0,
+          "95thPercentileLatency(us)": 1.0,
+          "99thPercentileLatency(us)": 1.0
+        },
+        "UPDATE": {
+          "Operations": 498.0,
+          "AverageLatency(us)": 909734.4257028112,
+          "MinLatency(us)": 212864.0,
+          "MaxLatency(us)": 1987583.0,
+          "50thPercentileLatency(us)": 871935.0,
+          "95thPercentileLatency(us)": 1422335.0,
+          "99thPercentileLatency(us)": 1763327.0,
+          "Return=OK": 498.0
+        }
+      }
+    },
+    {
+      "ops_sec": 38.984834899224204,
+      "runtime_seconds": 25.651,
+      "ok": 1000,
+      "errors": 0,
+      "total": 1000,
+      "status_counts": {
+        "READ/OK": 481,
+        "UPDATE/OK": 519
+      },
+      "read_mean_ms": 50.90760291060291,
+      "read_p95_ms": 101.695,
+      "update_mean_ms": 334.16184971098266,
+      "update_p95_ms": 459.519,
+      "profile": "misto",
+      "mode": "eventual",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 19.28571359999478,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 25651.0,
+          "Throughput(ops/sec)": 38.984834899224204
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 6.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.02339090093953452
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 6.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.02339090093953452
+        },
+        "READ": {
+          "Operations": 481.0,
+          "AverageLatency(us)": 50907.60291060291,
+          "MinLatency(us)": 3922.0,
+          "MaxLatency(us)": 465151.0,
+          "50thPercentileLatency(us)": 41919.0,
+          "95thPercentileLatency(us)": 101695.0,
+          "99thPercentileLatency(us)": 161279.0,
+          "Return=OK": 481.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 0.375,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 1.0,
+          "50thPercentileLatency(us)": 0.0,
+          "95thPercentileLatency(us)": 1.0,
+          "99thPercentileLatency(us)": 1.0
+        },
+        "UPDATE": {
+          "Operations": 519.0,
+          "AverageLatency(us)": 334161.84971098264,
+          "MinLatency(us)": 22080.0,
+          "MaxLatency(us)": 695807.0,
+          "50thPercentileLatency(us)": 340479.0,
+          "95thPercentileLatency(us)": 459519.0,
+          "99thPercentileLatency(us)": 680959.0,
+          "Return=OK": 519.0
+        }
+      }
+    },
+    {
+      "ops_sec": 39.56009177941293,
+      "runtime_seconds": 25.278,
+      "ok": 1000,
+      "errors": 0,
+      "total": 1000,
+      "status_counts": {
+        "READ/OK": 506,
+        "UPDATE/OK": 494
+      },
+      "read_mean_ms": 43.56951778656126,
+      "read_p95_ms": 106.815,
+      "update_mean_ms": 342.42979757085016,
+      "update_p95_ms": 513.279,
+      "profile": "misto",
+      "mode": "ryw",
+      "round": 1,
+      "convergence": {
+        "converged": true,
+        "wait_seconds": 16.24367599998368,
+        "records": 1000
+      },
+      "metrics": {
+        "OVERALL": {
+          "RunTime(ms)": 25278.0,
+          "Throughput(ops/sec)": 39.56009177941293
+        },
+        "TOTAL_GCS_G1_Young_Generation": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME_G1_Young_Generation": {
+          "Time(ms)": 5.0
+        },
+        "TOTAL_GC_TIME_%_G1_Young_Generation": {
+          "Time(%)": 0.019780045889706464
+        },
+        "TOTAL_GCS_G1_Concurrent_GC": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Concurrent_GC": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Concurrent_GC": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCS_G1_Old_Generation": {
+          "Count": 0.0
+        },
+        "TOTAL_GC_TIME_G1_Old_Generation": {
+          "Time(ms)": 0.0
+        },
+        "TOTAL_GC_TIME_%_G1_Old_Generation": {
+          "Time(%)": 0.0
+        },
+        "TOTAL_GCs": {
+          "Count": 2.0
+        },
+        "TOTAL_GC_TIME": {
+          "Time(ms)": 5.0
+        },
+        "TOTAL_GC_TIME_%": {
+          "Time(%)": 0.019780045889706464
+        },
+        "READ": {
+          "Operations": 506.0,
+          "AverageLatency(us)": 43569.517786561264,
+          "MinLatency(us)": 3360.0,
+          "MaxLatency(us)": 215167.0,
+          "50thPercentileLatency(us)": 33375.0,
+          "95thPercentileLatency(us)": 106815.0,
+          "99thPercentileLatency(us)": 171903.0,
+          "Return=OK": 506.0
+        },
+        "CLEANUP": {
+          "Operations": 8.0,
+          "AverageLatency(us)": 0.625,
+          "MinLatency(us)": 0.0,
+          "MaxLatency(us)": 1.0,
+          "50thPercentileLatency(us)": 1.0,
+          "95thPercentileLatency(us)": 1.0,
+          "99thPercentileLatency(us)": 1.0
+        },
+        "UPDATE": {
+          "Operations": 494.0,
+          "AverageLatency(us)": 342429.7975708502,
+          "MinLatency(us)": 20352.0,
+          "MaxLatency(us)": 594431.0,
+          "50thPercentileLatency(us)": 351231.0,
+          "95thPercentileLatency(us)": 513279.0,
+          "99thPercentileLatency(us)": 557055.0,
+          "Return=OK": 494.0
+        }
+      }
+    }
+  ]
+}

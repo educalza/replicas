@@ -1,0 +1,24 @@
+Command line: -load -s -db site.ycsb.db.CoordenadorClient -P C:\codigos\replicas\YCSB-master\coordenador\workload -threads 1 -p coordenador.url=http://127.0.0.1:53033 -p recordcount=1000 -p operationcount=1000 -p readproportion=0 -p updateproportion=1 -p measurementtype=hdrhistogram -p exportfile=C:\codigos\replicas\benchmarks\results\20260928-173611\load\metrics.txt -p status.interval=10 -p core_workload_insertion_retry_limit=5 -p core_workload_insertion_retry_interval=1
+YCSB Client 0.18.0-SNAPSHOT
+
+Loading workload...
+Starting test.
+2026-09-28 17:36:12:681 0 sec: 0 operations; est completion in 0 second 
+DBWrapper: report latency for each error is false and specific error codes to track for latency are: []
+2026-09-28 17:36:22:687 10 sec: 120 operations; 11,99 current ops/sec; est completion in 1 minute [INSERT: Count=120, Max=215935, Min=29360, Avg=82547,87, 50=81727, 90=120063, 99=142975, 99.9=215935, 99.99=215935] 
+2026-09-28 17:36:32:683 20 sec: 222 operations; 10,2 current ops/sec; est completion in 1 minute [INSERT: Count=102, Max=153471, Min=63808, Avg=97527,37, 50=96127, 90=125055, 99=143615, 99.9=153471, 99.99=153471] 
+2026-09-28 17:36:42:690 30 sec: 323 operations; 10,09 current ops/sec; est completion in 1 minute [INSERT: Count=101, Max=175999, Min=68928, Avg=99622,34, 50=95743, 90=127871, 99=156159, 99.9=175999, 99.99=175999] 
+Retrying insertion, retry count: 1
+2026-09-28 17:36:52:695 40 sec: 406 operations; 8,3 current ops/sec; est completion in 59 seconds [INSERT: Count=83, Max=164735, Min=52576, Avg=106444,72, 50=99135, 90=140031, 99=164735, 99.9=164735, 99.99=164735] [INSERT-FAILED: Count=1, Max=88895, Min=88832, Avg=88864, 50=88895, 90=88895, 99=88895, 99.9=88895, 99.99=88895] 
+2026-09-28 17:37:02:692 50 sec: 494 operations; 8,8 current ops/sec; est completion in 52 seconds [INSERT: Count=88, Max=207615, Min=81280, Avg=113604,73, 50=104703, 90=145791, 99=207615, 99.9=207615, 99.99=207615] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-28 17:37:12:697 60 sec: 568 operations; 7,4 current ops/sec; est completion in 46 seconds [INSERT: Count=74, Max=256383, Min=73344, Avg=134231,35, 50=133119, 90=161407, 99=256383, 99.9=256383, 99.99=256383] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-28 17:37:22:687 70 sec: 639 operations; 7,11 current ops/sec; est completion in 40 seconds [INSERT: Count=71, Max=258175, Min=91648, Avg=142340,96, 50=139135, 90=171647, 99=258175, 99.9=258175, 99.99=258175] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-28 17:37:32:686 80 sec: 718 operations; 7,9 current ops/sec; est completion in 32 seconds [INSERT: Count=79, Max=243455, Min=80640, Avg=126407,29, 50=120127, 90=176895, 99=243455, 99.9=243455, 99.99=243455] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+Retrying insertion, retry count: 1
+2026-09-28 17:37:42:687 90 sec: 759 operations; 4,1 current ops/sec; est completion in 29 seconds [INSERT: Count=41, Max=1029631, Min=69504, Avg=212499,51, 50=160127, 90=380927, 99=1029631, 99.9=1029631, 99.99=1029631] [INSERT-FAILED: Count=1, Max=174207, Min=174080, Avg=174144, 50=174207, 90=174207, 99=174207, 99.9=174207, 99.99=174207] 
+Retrying insertion, retry count: 1
+2026-09-28 17:37:52:691 100 sec: 795 operations; 3,6 current ops/sec; est completion in 26 seconds [INSERT: Count=36, Max=942079, Min=117184, Avg=248778,67, 50=171519, 90=582655, 99=942079, 99.9=942079, 99.99=942079] [INSERT-FAILED: Count=1, Max=167039, Min=166912, Avg=166976, 50=167039, 90=167039, 99=167039, 99.9=167039, 99.99=167039] 
+2026-09-28 17:38:02:693 110 sec: 868 operations; 7,3 current ops/sec; est completion in 17 seconds [INSERT: Count=73, Max=198527, Min=95808, Avg=135755,4, 50=129599, 90=175871, 99=198527, 99.9=198527, 99.99=198527] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-28 17:38:12:687 120 sec: 933 operations; 6,5 current ops/sec; est completion in 9 second [INSERT: Count=65, Max=252671, Min=102208, Avg=151594,83, 50=150527, 90=190975, 99=252671, 99.9=252671, 99.99=252671] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-28 17:38:22:682 130 sec: 995 operations; 6,2 current ops/sec; est completion in 1 second [INSERT: Count=62, Max=324607, Min=102784, Avg=160363,35, 50=154623, 90=193151, 99=324607, 99.9=324607, 99.99=324607] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 
+2026-09-28 17:38:23:412 130 sec: 1000 operations; 6,86 current ops/sec; [CLEANUP: Count=1, Max=1, Min=1, Avg=1, 50=1, 90=1, 99=1, 99.9=1, 99.99=1] [INSERT: Count=5, Max=418815, Min=116288, Avg=190771,2, 50=149247, 90=418815, 99=418815, 99.9=418815, 99.99=418815] [INSERT-FAILED: Count=0, Max=0, Min=0, Avg=0, 50=0, 90=0, 99=0, 99.9=0, 99.99=0] 

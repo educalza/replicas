@@ -1,0 +1,4 @@
+results/**/replica*.json
+results/**/baseline.json
+results/**/replica*.log
+results/**/coordenador.log
