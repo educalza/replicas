@@ -23,10 +23,44 @@ python3 coordenador.py --mode eventual
 python3 coordenador.py --mode ryw
 ```
 
-- `strong`: a escrita aguarda as tres replicas e a leitura valida as tres.
-- `eventual`: confirma uma replica e propaga para as outras em segundo plano.
-- `ryw`: fixa o cliente em uma replica, garantindo a leitura das proprias
-  escritas, e propaga para as demais em segundo plano.
+- `strong`: serializa leituras e escritas. A escrita so confirma sucesso depois
+  que todas as replicas gravarem; a leitura valida todas sob o mesmo bloqueio,
+  sem observar uma escrita pela metade. Se uma escrita falhar parcialmente,
+  retorna `503`, tenta concluir a sincronizacao em segundo plano e impede
+  leituras dessa chave ate a recuperacao.
+- `eventual`: confirma a escrita em uma replica e propaga para as outras em
+  segundo plano. Leituras alternam entre replicas e podem retornar um valor
+  antigo (ou `404` para uma chave ainda nao propagada). Falhas de propagacao
+  sao repetidas ate a replica voltar ou uma escrita mais nova substituir a antiga.
+- `ryw`: usa a mesma propagacao assincrona, mas fixa cada `X-Client-ID` em uma
+  replica. Depois de uma escrita confirmada, o cliente le sua propria escrita
+  ou uma escrita posterior da mesma chave. Se sua replica estiver indisponivel,
+  retorna erro, sem redirecionar a leitura para uma copia possivelmente atrasada.
+
+Os modos assincronos aguardam apenas uma confirmacao na requisicao de escrita;
+o modo forte aguarda todas. O desempenho real depende da carga e das replicas.
+`--replication-delay 1` (padrao) define o atraso inicial de propagacao em segundos;
+use `--replication-delay 0` para propagar assim que possivel. O atraso e contado
+desde o agendamento de cada escrita, sem acrescentar uma pausa inteira por item.
+
+Cada escrita recebe uma versao ordenada, persistida junto ao valor nas replicas.
+Tentativas repetidas da mesma escrita sao idempotentes; versoes antigas nao
+sobrescrevem novas, inclusive quando uma requisicao termina depois de um timeout.
+Arquivos JSON existentes sem versao continuam sendo aceitos.
+
+Execute um unico coordenador para o conjunto de replicas e acesse os dados
+pela porta dele. A garantia forte se aplica as operacoes por esse coordenador:
+os arquivos sao atualizados em momentos distintos, mas leituras de clientes
+nao observam estados intermediarios. Ao iniciar o modo forte, use replicas
+com os mesmos dados; divergencias preexistentes retornam `409` e podem ser
+resolvidas gravando novamente a chave pelo coordenador.
+
+A fila de propagacao fica em memoria: mantenha o coordenador ativo e aguarde
+a convergencia antes de encerra-lo ou trocar de modo. Pendencias nao sobrevivem
+a reinicios. Mantenha tambem a mesma lista e ordem de replicas no modo `ryw`,
+pois ela determina a replica de cada cliente. As versoes usam o relogio do
+coordenador; se ele retroceder entre reinicios, uma escrita pode ser recusada
+ate uma nova tentativa receber uma versao superior a persistida.
 
 Os dados ficam em `data/replica1.json`, `data/replica2.json` e
 `data/replica3.json`.
@@ -54,7 +88,9 @@ Verificar a replica:
 curl http://localhost:5000/health
 ```
 
-No modo `ryw`, envie o mesmo identificador nas operacoes do mesmo cliente:
+No modo `ryw`, envie o mesmo identificador nas operacoes do mesmo cliente.
+O cabecalho `X-Client-ID` e obrigatorio e nao pode ser vazio; sua ausencia retorna
+`400`. Clientes diferentes devem usar identificadores diferentes:
 
 ```bash
 curl -X POST http://localhost:5000/write \
@@ -64,7 +100,9 @@ curl -H 'X-Client-ID: cliente-a' http://localhost:5000/read/produto1
 ```
 
 Respostas usam `200` em caso de sucesso, `400` para requisicao invalida e
-`404` quando a rota ou a chave nao existe.
+`404` quando a rota ou a chave nao existe, `409` para divergencia detectada e
+`503` quando a operacao nao pode ser confirmada. Um erro de escrita `503` nao
+significa cancelamento: a escrita pode ser concluida pelas novas tentativas.
 
 ## Benchmark com YCSB
 

@@ -8,9 +8,16 @@ import json
 import os
 import tempfile
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
+
+
+class VersionConflict(Exception):
+    def __init__(self, version: int):
+        self.version = version
+        super().__init__("a replica ja possui uma escrita mais recente ou conflitante")
 
 
 class DataStore:
@@ -57,11 +64,22 @@ class DataStore:
             data = self._load()
             return data.get(key)
 
-    def write(self, key: str, value) -> None:
+    def write(self, key: str, value, version: int | None = None) -> int:
         with self._lock:
             data = self._load()
-            data[key] = {"valor": value}
+            current = data.get(key, {})
+            current_version = current.get("versao", 0)
+            if version is None:
+                version = max(time.time_ns(), current_version + 1)
+            if version < current_version:
+                raise VersionConflict(current_version)
+            if version == current_version:
+                if current.get("valor") != value:
+                    raise VersionConflict(current_version)
+                return version
+            data[key] = {"valor": value, "versao": version}
             self._save(data)
+            return version
 
 
 def make_handler(store: DataStore, replica_id: str):
@@ -128,17 +146,24 @@ def make_handler(store: DataStore, replica_id: str):
             if "valor" not in payload:
                 self._json(400, {"erro": "campo 'valor' obrigatorio"})
                 return
+            version = payload.get("versao")
+            if "versao" in payload and (type(version) is not int or version <= 0):
+                self._json(400, {"erro": "'versao' deve ser um inteiro positivo"})
+                return
 
             key = key.strip()
             try:
-                store.write(key, payload["valor"])
-            except RuntimeError as exc:
+                version = store.write(key, payload["valor"], version)
+            except VersionConflict as exc:
+                self._json(409, {"erro": str(exc), "versao": exc.version})
+                return
+            except (RuntimeError, OSError) as exc:
                 self._json(500, {"erro": str(exc)})
                 return
             self._json(
                 200,
                 {"mensagem": "valor gravado", "chave": key,
-                 "valor": payload["valor"], "replica": replica_id},
+                 "valor": payload["valor"], "replica": replica_id, "versao": version},
             )
 
         def log_message(self, format: str, *args) -> None:
