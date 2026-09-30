@@ -2,3 +2,5 @@ results/**/replica*.json
 results/**/baseline.json
 results/**/replica*.log
 results/**/coordenador.log
+results/**/[0-9]*-*/
+results/**/results-before-*.json

@@ -1,0 +1,677 @@
+{
+  "generated_utc": "2026-09-30T01:44:33.773788+00:00",
+  "metadata": {
+    "records": 1000,
+    "operations": 1000,
+    "threads": 8,
+    "repetitions": 10,
+    "delay": 1.0,
+    "started_utc": "2026-09-28T20:36:11.237476+00:00",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]",
+    "java_version": "java version \"21.0.7\" 2025-04-15 LTS\nJava(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)\n",
+    "source_sha256": {
+      "coordenador.py": "45a71b268d5262ba19bf744daccf7c26cfa7c9c0cbfb216ee98b4bf44bd75ea9",
+      "replica.py": "bf31b4ac220c87fa8f9cb0869111b8d0f5f6f719f16a7abaf6900b1b7195c651"
+    },
+    "baseline_sha256": "3249f7d99efb4bccf3b7d13cb42784fbe877ad4b16efcfbe9df33a31435b2026",
+    "load": {
+      "ops_sec": 7.649236606186703,
+      "runtime_seconds": 130.732,
+      "ok": 1000,
+      "errors": 3,
+      "total": 1003,
+      "status_counts": {
+        "INSERT/OK": 1000,
+        "INSERT/SERVICE_UNAVAILABLE": 3
+      },
+      "read_mean_ms": null,
+      "read_p95_ms": null,
+      "update_mean_ms": null,
+      "update_p95_ms": null
+    },
+    "resumed_utc": [
+      "2026-09-28T21:02:18.124680+00:00",
+      "2026-09-30T00:30:02.875085+00:00",
+      "2026-09-30T00:32:38.934162+00:00"
+    ],
+    "previous_finished_utc": [
+      "2026-09-28T21:07:57.342731+00:00"
+    ],
+    "status": "complete",
+    "finished_utc": "2026-09-30T01:43:20.516037+00:00"
+  },
+  "verified_runs": 90,
+  "summary": [
+    {
+      "profile": "leitura",
+      "mode": "strong",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 41.786386098792164,
+          "sample_sd": 7.201846240426392,
+          "min": 28.161081385525204,
+          "max": 48.79476920074168
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 24.7241,
+          "sample_sd": 5.148941972224326,
+          "min": 20.494,
+          "max": 35.51
+        },
+        "read_mean_ms": {
+          "n": 10,
+          "mean": 196.89963072079854,
+          "sample_sd": 41.01234097043219,
+          "min": 163.3539078156313,
+          "max": 282.528288
+        },
+        "read_p95_ms": {
+          "n": 10,
+          "mean": 275.6726,
+          "sample_sd": 46.99423152118425,
+          "min": 244.223,
+          "max": 389.887
+        },
+        "update_mean_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "update_p95_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "errors": {
+          "n": 10,
+          "mean": 1,
+          "sample_sd": 0.816496580927726,
+          "min": 0,
+          "max": 2
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 0.00705520999035798,
+          "sample_sd": 0.002331071792231994,
+          "min": 0.003876300062984228,
+          "max": 0.010446600033901632
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9990,
+      "total_errors": 10,
+      "error_rate_percent": 0.1,
+      "all_converged": true,
+      "pooled_ops_sec": 40.44636609623809,
+      "successful_ops_sec": 40.40591973014185
+    },
+    {
+      "profile": "leitura",
+      "mode": "eventual",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 498.3471034399628,
+          "sample_sd": 103.49528453877046,
+          "min": 214.27040925648168,
+          "max": 577.3672055427252
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 2.1698,
+          "sample_sd": 0.8832800990248412,
+          "min": 1.732,
+          "max": 4.667
+        },
+        "read_mean_ms": {
+          "n": 10,
+          "mean": 16.312558634812977,
+          "sample_sd": 6.254159551127629,
+          "min": 13.15208908908909,
+          "max": 33.953417835671345
+        },
+        "read_p95_ms": {
+          "n": 10,
+          "mean": 34.3862,
+          "sample_sd": 18.4424411784943,
+          "min": 22.847,
+          "max": 86.207
+        },
+        "update_mean_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "update_p95_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "errors": {
+          "n": 10,
+          "mean": 4.5,
+          "sample_sd": 7.05927286151579,
+          "min": 0,
+          "max": 22
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 0.010884209995856509,
+          "sample_sd": 0.013620930082882765,
+          "min": 0.0046326000010594726,
+          "max": 0.04956799995852634
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9955,
+      "total_errors": 45,
+      "error_rate_percent": 0.45,
+      "all_converged": true,
+      "pooled_ops_sec": 460.87196976679877,
+      "successful_ops_sec": 458.7980459028482
+    },
+    {
+      "profile": "leitura",
+      "mode": "ryw",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 383.8499345343835,
+          "sample_sd": 101.94078408235727,
+          "min": 218.8662727073758,
+          "max": 533.0490405117271
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 2.7935,
+          "sample_sd": 0.8205728689966134,
+          "min": 1.876,
+          "max": 4.569
+        },
+        "read_mean_ms": {
+          "n": 10,
+          "mean": 18.27296668777485,
+          "sample_sd": 4.9843518989138005,
+          "min": 13.094914572864322,
+          "max": 30.39343486973948
+        },
+        "read_p95_ms": {
+          "n": 10,
+          "mean": 34.8486,
+          "sample_sd": 11.486223199023156,
+          "min": 22.639,
+          "max": 61.535
+        },
+        "update_mean_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "update_p95_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "errors": {
+          "n": 10,
+          "mean": 2.3,
+          "sample_sd": 1.3374935098492586,
+          "min": 1,
+          "max": 5
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 0.011928309965878726,
+          "sample_sd": 0.010950572679778779,
+          "min": 0.003873799927532673,
+          "max": 0.03240129991900176
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9977,
+      "total_errors": 23,
+      "error_rate_percent": 0.23,
+      "all_converged": true,
+      "pooled_ops_sec": 357.9738679076428,
+      "successful_ops_sec": 357.1505280114552
+    },
+    {
+      "profile": "escrita",
+      "mode": "strong",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 7.8675541704355965,
+          "sample_sd": 1.4560544931959514,
+          "min": 4.644379835960504,
+          "max": 9.652043820278944
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 132.3782,
+          "sample_sd": 32.508780809703296,
+          "min": 103.605,
+          "max": 215.314
+        },
+        "read_mean_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "read_p95_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "update_mean_ms": {
+          "n": 10,
+          "mean": 1052.9408736776102,
+          "sample_sd": 252.64195198440504,
+          "min": 825.5285685685685,
+          "max": 1692.3529736308317
+        },
+        "update_p95_ms": {
+          "n": 10,
+          "mean": 1603.3782,
+          "sample_sd": 711.589184805203,
+          "min": 1252.351,
+          "max": 3606.527
+        },
+        "errors": {
+          "n": 10,
+          "mean": 2,
+          "sample_sd": 4.268749491621899,
+          "min": 0,
+          "max": 14
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 0.13400653001153842,
+          "sample_sd": 0.11347228994683758,
+          "min": 0.03783870011102408,
+          "max": 0.3880570000037551
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9980,
+      "total_errors": 20,
+      "error_rate_percent": 0.2,
+      "all_converged": true,
+      "pooled_ops_sec": 7.554113894886016,
+      "successful_ops_sec": 7.539005667096244
+    },
+    {
+      "profile": "escrita",
+      "mode": "eventual",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 21.21894839962756,
+          "sample_sd": 3.8934404716028244,
+          "min": 17.247326664367023,
+          "max": 30.461800901669307
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 48.3442,
+          "sample_sd": 7.488054068536987,
+          "min": 32.828,
+          "max": 57.98
+        },
+        "read_mean_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "read_p95_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "update_mean_ms": {
+          "n": 10,
+          "mean": 385.44011812540396,
+          "sample_sd": 59.803493146760275,
+          "min": 261.87389178356716,
+          "max": 462.084128
+        },
+        "update_p95_ms": {
+          "n": 10,
+          "mean": 639.4358,
+          "sample_sd": 86.82840057236776,
+          "min": 498.175,
+          "max": 762.367
+        },
+        "errors": {
+          "n": 10,
+          "mean": 1.1,
+          "sample_sd": 0.9944289260117531,
+          "min": 0,
+          "max": 2
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 26.724373670021304,
+          "sample_sd": 4.0510054008648835,
+          "min": 19.399784400011413,
+          "max": 31.0310327000916
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9989,
+      "total_errors": 11,
+      "error_rate_percent": 0.11,
+      "all_converged": true,
+      "pooled_ops_sec": 20.68500461275603,
+      "successful_ops_sec": 20.662251107681996
+    },
+    {
+      "profile": "escrita",
+      "mode": "ryw",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 19.964016142050358,
+          "sample_sd": 3.6192641508540517,
+          "min": 16.691704223001167,
+          "max": 27.070925825663238
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 51.4321,
+          "sample_sd": 8.28492871893161,
+          "min": 36.94,
+          "max": 59.91
+        },
+        "read_mean_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "read_p95_ms": {
+          "n": 0,
+          "mean": null,
+          "sample_sd": null,
+          "min": null,
+          "max": null
+        },
+        "update_mean_ms": {
+          "n": 10,
+          "mean": 409.94257847410535,
+          "sample_sd": 65.93131083623372,
+          "min": 294.61740140140137,
+          "max": 476.9076072144288
+        },
+        "update_p95_ms": {
+          "n": 10,
+          "mean": 683.2118,
+          "sample_sd": 125.17145240455855,
+          "min": 497.663,
+          "max": 845.823
+        },
+        "errors": {
+          "n": 10,
+          "mean": 1.2,
+          "sample_sd": 0.9189365834726815,
+          "min": 0,
+          "max": 2
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 23.222503689996664,
+          "sample_sd": 4.492283610606299,
+          "min": 18.71092330000829,
+          "max": 33.02022459998261
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9988,
+      "total_errors": 12,
+      "error_rate_percent": 0.12,
+      "all_converged": true,
+      "pooled_ops_sec": 19.443110431034313,
+      "successful_ops_sec": 19.419778698517074
+    },
+    {
+      "profile": "misto",
+      "mode": "strong",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 12.462891134722554,
+          "sample_sd": 1.4649062173258358,
+          "min": 9.445992537665894,
+          "max": 14.419402748338165
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 81.3604,
+          "sample_sd": 10.710740032530172,
+          "min": 69.351,
+          "max": 105.865
+        },
+        "read_mean_ms": {
+          "n": 10,
+          "mean": 623.1846573563989,
+          "sample_sd": 76.14299713217875,
+          "min": 519.4699553752536,
+          "max": 778.9775298804781
+        },
+        "read_p95_ms": {
+          "n": 10,
+          "mean": 1002.9046,
+          "sample_sd": 113.87107144017452,
+          "min": 878.079,
+          "max": 1297.407
+        },
+        "update_mean_ms": {
+          "n": 10,
+          "mean": 674.1906801428539,
+          "sample_sd": 96.60242640796166,
+          "min": 584.2876844181459,
+          "max": 909.7344257028112
+        },
+        "update_p95_ms": {
+          "n": 10,
+          "mean": 1082.623,
+          "sample_sd": 141.54744958336607,
+          "min": 939.519,
+          "max": 1422.335
+        },
+        "errors": {
+          "n": 10,
+          "mean": 0,
+          "sample_sd": 0.0,
+          "min": 0,
+          "max": 0
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 0.024723740020999686,
+          "sample_sd": 0.03130302477274636,
+          "min": 0.003811500035226345,
+          "max": 0.0897904000012204
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 10000,
+      "total_errors": 0,
+      "error_rate_percent": 0.0,
+      "all_converged": true,
+      "pooled_ops_sec": 12.290991686373225,
+      "successful_ops_sec": 12.290991686373225
+    },
+    {
+      "profile": "misto",
+      "mode": "eventual",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 40.50382494444035,
+          "sample_sd": 3.965355604627264,
+          "min": 35.44339689515843,
+          "max": 48.640498078700325
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 24.8959,
+          "sample_sd": 2.3623284864255805,
+          "min": 20.559,
+          "max": 28.214
+        },
+        "read_mean_ms": {
+          "n": 10,
+          "mean": 52.167698603172234,
+          "sample_sd": 3.3581009062446396,
+          "min": 44.414423149905126,
+          "max": 55.77818518518518
+        },
+        "read_p95_ms": {
+          "n": 10,
+          "mean": 130.9622,
+          "sample_sd": 18.7548284556271,
+          "min": 101.695,
+          "max": 175.231
+        },
+        "update_mean_ms": {
+          "n": 10,
+          "mean": 325.39458344303335,
+          "sample_sd": 21.998686703052282,
+          "min": 286.5439661733615,
+          "max": 358.3857330754352
+        },
+        "update_p95_ms": {
+          "n": 10,
+          "mean": 606.3862,
+          "sample_sd": 73.31698272993931,
+          "min": 459.519,
+          "max": 693.247
+        },
+        "errors": {
+          "n": 10,
+          "mean": 0,
+          "sample_sd": 0.0,
+          "min": 0,
+          "max": 0
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 17.70691141000716,
+          "sample_sd": 3.028088599199124,
+          "min": 11.264375900034793,
+          "max": 22.671120399958454
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 10000,
+      "total_errors": 0,
+      "error_rate_percent": 0.0,
+      "all_converged": true,
+      "pooled_ops_sec": 40.167256455882296,
+      "successful_ops_sec": 40.167256455882296
+    },
+    {
+      "profile": "misto",
+      "mode": "ryw",
+      "n": 10,
+      "statistics": {
+        "ops_sec": {
+          "n": 10,
+          "mean": 43.57790245437193,
+          "sample_sd": 8.480471659761283,
+          "min": 35.61253561253561,
+          "max": 59.308463317715436
+        },
+        "runtime_seconds": {
+          "n": 10,
+          "mean": 23.6191,
+          "sample_sd": 3.872532488924757,
+          "min": 16.861,
+          "max": 28.08
+        },
+        "read_mean_ms": {
+          "n": 10,
+          "mean": 45.08691720663977,
+          "sample_sd": 7.265541463749955,
+          "min": 32.06753346456693,
+          "max": 55.59038306451613
+        },
+        "read_p95_ms": {
+          "n": 10,
+          "mean": 112.6966,
+          "sample_sd": 24.695311310269222,
+          "min": 70.975,
+          "max": 150.783
+        },
+        "update_mean_ms": {
+          "n": 10,
+          "mean": 316.35406265466946,
+          "sample_sd": 47.58317832314863,
+          "min": 231.4384267782427,
+          "max": 373.5421484375
+        },
+        "update_p95_ms": {
+          "n": 10,
+          "mean": 593.6886,
+          "sample_sd": 95.10708749287708,
+          "min": 431.871,
+          "max": 741.375
+        },
+        "errors": {
+          "n": 10,
+          "mean": 0.1,
+          "sample_sd": 0.31622776601683794,
+          "min": 0,
+          "max": 1
+        },
+        "convergence_seconds": {
+          "n": 10,
+          "mean": 15.574611950007966,
+          "sample_sd": 2.767858414869794,
+          "min": 10.733375399955548,
+          "max": 18.844215899938717
+        }
+      },
+      "total_operations": 10000,
+      "total_ok": 9999,
+      "total_errors": 1,
+      "error_rate_percent": 0.01,
+      "all_converged": true,
+      "pooled_ops_sec": 42.338615781295644,
+      "successful_ops_sec": 42.334381919717515
+    }
+  ]
+}

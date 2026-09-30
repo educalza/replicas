@@ -107,13 +107,22 @@ class Cluster:
 
     def converge(self, timeout=300):
         start = time.monotonic()
+        read_retries = 0
         while time.monotonic() - start < timeout:
-            copies = [json.loads(path.read_text(encoding="utf-8")) for path in self.files]
+            try:
+                copies = [json.loads(path.read_text(encoding="utf-8")) for path in self.files]
+            except PermissionError:
+                # O Windows pode bloquear brevemente um arquivo durante replace.
+                # Esta verificacao ocorre depois do YCSB; nao altera as metricas.
+                read_retries += 1
+                time.sleep(0.25)
+                continue
             if all(copy == copies[0] for copy in copies[1:]):
                 return {"converged": True, "wait_seconds": time.monotonic() - start,
-                        "records": len(copies[0])}
+                        "records": len(copies[0]), "read_retries": read_retries}
             time.sleep(0.25)
-        return {"converged": False, "wait_seconds": time.monotonic() - start}
+        return {"converged": False, "wait_seconds": time.monotonic() - start,
+                "read_retries": read_retries}
 
     def __exit__(self, *args):
         for process in reversed(self.processes):
@@ -189,8 +198,10 @@ def summarize(metrics):
 
 
 def report(output, metadata, results):
-    (output / "results.json").write_text(json.dumps({"metadata": metadata, "results": results},
-                                                   indent=2, ensure_ascii=False), encoding="utf-8")
+    temporary = output / "results.json.tmp"
+    temporary.write_text(json.dumps({"metadata": metadata, "results": results},
+                                   indent=2, ensure_ascii=False), encoding="utf-8")
+    temporary.replace(output / "results.json")
     headers = ["Carga", "Modo", "Rodada", "Ops/s", "Tempo (s)", "Leitura media (ms)",
                "Leitura p95 (ms)", "Escrita media (ms)", "Escrita p95 (ms)", "OK", "Erros",
                "Espera convergencia (s)"]
@@ -260,9 +271,13 @@ def main():
     parser.add_argument("--delay", type=float, default=1.0)
     parser.add_argument("--timeout", type=float, default=1800)
     parser.add_argument("--resume", type=Path, help="retoma uma pasta de resultados existente")
+    parser.add_argument("--total-repetitions", type=int,
+                        help="amplia uma execucao retomada para este total de rodadas")
     parser.add_argument("--output", type=Path,
                         default=ROOT / "benchmarks" / "results" / datetime.now().strftime("%Y%m%d-%H%M%S"))
     args = parser.parse_args()
+    if args.total_repetitions is not None and (not args.resume or args.total_repetitions < 1):
+        parser.error("--total-repetitions exige --resume e um total positivo")
     if not args.java:
         parser.error("Java nao encontrado; informe --java com o caminho de java.exe")
     if min(args.records, args.operations, args.threads, args.repetitions) < 1 or args.delay < 0:
@@ -298,9 +313,25 @@ def main():
             raise RuntimeError("A base salva foi alterada")
         metadata = previous
         results = saved["results"]
+        identities = {(row["round"], row["profile"], row["mode"]) for row in results}
+        if len(identities) != len(results) or any(
+                row["total"] != metadata["operations"] or not row["convergence"]["converged"]
+                for row in results):
+            raise RuntimeError("Resultados existentes duplicados, incompletos ou sem convergencia")
+        if args.total_repetitions is not None:
+            if args.total_repetitions < metadata["repetitions"]:
+                parser.error("O novo total nao pode reduzir as rodadas existentes")
+            if args.total_repetitions > metadata["repetitions"]:
+                snapshot = output / f"results-before-{args.total_repetitions}-rounds.json"
+                if not snapshot.exists():
+                    shutil.copyfile(output / "results.json", snapshot)
+                metadata["repetitions"] = args.total_repetitions
+                if "finished_utc" in metadata:
+                    metadata.setdefault("previous_finished_utc", []).append(metadata.pop("finished_utc"))
         for key in ("records", "operations", "threads", "repetitions", "delay"):
             setattr(args, key, metadata[key])
         metadata.setdefault("resumed_utc", []).append(datetime.now(timezone.utc).isoformat())
+    metadata["status"] = "running"
     report(output, metadata, results)
     print(f"Resultados: {output}", flush=True)
     if not args.resume:
@@ -333,11 +364,14 @@ def main():
                         raise RuntimeError("Pasta fora da area de resultados")
                     directory.rename(archive)
                 print(f"Iniciando {label}", flush=True)
+                started = datetime.now(timezone.utc).isoformat()
                 with Cluster(directory, mode, args.delay, baseline) as cluster:
                     metrics = run_ycsb(args, cluster, directory, profile)
                     result = summarize(metrics)
                     result.update({"profile": profile, "mode": mode, "round": repetition,
-                                   "convergence": cluster.converge(), "metrics": metrics})
+                                   "convergence": cluster.converge(), "metrics": metrics,
+                                   "started_utc": started,
+                                   "finished_utc": datetime.now(timezone.utc).isoformat()})
                 results.append(result)
                 report(output, metadata, results)
                 print(f"Concluido {label}: {result['ops_sec']:.2f} ops/s; "
@@ -345,6 +379,7 @@ def main():
                 if result["total"] != args.operations or not result["convergence"]["converged"]:
                     raise RuntimeError(f"Execucao incompleta ou replicas divergentes: {label}")
     metadata["finished_utc"] = datetime.now(timezone.utc).isoformat()
+    metadata["status"] = "complete"
     report(output, metadata, results)
     print(f"Concluido. Tabela: {output / 'comparacao.html'}", flush=True)
 

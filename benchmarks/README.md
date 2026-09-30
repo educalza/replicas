@@ -7,30 +7,50 @@ caso, sem alterar os arquivos da pasta `data` nem utilizar servidores ja abertos
 
 ## Comparacao executada
 
-Resultado de 28/09/2026, com 1.000 registros, 1.000 operacoes por caso,
-8 threads e uma rodada:
+Resultado final com 10 rodadas por cenário, 1.000 registros, 1.000 operações
+por caso, 8 threads e atraso de propagação de 1 segundo:
 
-| Modo | Leitura (ops/s) | Escrita (ops/s) | Misto (ops/s) | Erros nas 3.000 operacoes |
+| Modo | Leitura: média ± DP (ops/s) | Escrita: média ± DP (ops/s) | Misto: média ± DP (ops/s) | Erros nas 30.000 operações |
 | --- | ---: | ---: | ---: | ---: |
-| strong | 28,16 | 4,64 | 9,45 | 14 |
-| eventual | 214,27 | 20,95 | 38,98 | 2 |
-| ryw | 218,87 | 24,36 | 39,56 | 4 |
+| strong | 41,79 ± 7,20 | 7,87 ± 1,46 | 12,46 ± 1,46 | 30 |
+| eventual | 498,35 ± 103,50 | 21,22 ± 3,89 | 40,50 ± 3,97 | 56 |
+| ryw | 383,85 ± 101,94 | 19,96 ± 3,62 | 43,58 ± 8,48 | 36 |
 
-[Tabela completa em HTML](results/20260928-173611/comparacao.html),
-[tabela em Markdown](results/20260928-173611/comparacao.md) e
-[metricas e parametros em JSON](results/20260928-173611/results.json).
+[Tabela final de médias em HTML](results/20260928-173611/medias.html),
+[tabela de médias em Markdown](results/20260928-173611/medias.md),
+[médias e estatísticas em JSON](results/20260928-173611/medias.json),
+[resultados individuais](results/20260928-173611/comparacao.html) e
+[métricas brutas e parâmetros](results/20260928-173611/results.json).
 
-Todas as replicas convergiram ao final dos nove casos. Na carga de escrita,
-eventual e ryw precisaram de mais 28,61 s e 22,06 s, respectivamente, depois
-que o YCSB terminou. Essa espera nao faz parte do throughput acima.
-Os erros estao incluidos no total de operacoes do YCSB.
+Todas as réplicas convergiram após as 90 medições. A espera posterior média
+pela convergência foi de 26,72 s para escrita eventual e 23,22 s para escrita
+RYW; não entra no throughput. Os erros estão incluídos no total de operações
+do YCSB. DP é o desvio-padrão amostral das dez rodadas.
 
-A execucao foi interrompida e retomada apos quatro casos completos, preservando
-a mesma base e os mesmos parametros. O caso parcialmente executado foi
-arquivado e repetido; nao entrou na tabela. Trata-se de uma medicao exploratoria
-local, sem repeticoes para estimar variabilidade.
+A execução foi retomada após interrupções, preservando a mesma base e os mesmos
+parâmetros. Casos parcialmente executados foram arquivados e repetidos e não
+entram na tabela. Trata-se de medição local, e a variação do computador ainda
+pode influenciar os resultados.
 
 ## Preparar e executar no PowerShell
+
+Para ampliar a execucao salva para 10 rodadas no total, preservando a primeira:
+
+```powershell
+python benchmarks/run_benchmarks.py --resume benchmarks/results/20260928-173611 --total-repetitions 10
+```
+
+Isso completa 10 medicoes de cada um dos 9 cenarios (90 execucoes), mantendo
+os parametros e a base originais. Para calcular as medias depois que terminar:
+
+```powershell
+python benchmarks/summarize_benchmarks.py benchmarks/results/20260928-173611
+```
+
+O calculo confere todos os arquivos brutos antes de gerar `medias.html`,
+`medias.md` e `medias.json`. As medias sao aritmeticas por cenario, com o mesmo
+peso por rodada; o desvio-padrao e amostral. Erros sao somados. A media dos
+p95 individuais nao representa um p95 combinado das operacoes.
 
 Compile o YCSB uma vez, na raiz do projeto:
 

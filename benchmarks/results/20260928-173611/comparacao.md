@@ -1,6 +1,6 @@
 # Comparacao dos modos de consistencia
 
-1000 registros; 1000 operacoes por execucao; 8 threads; 1 rodada(s); atraso assincrono de 1.0 s. Escrita = UPDATE; misto = 50% READ / 50% UPDATE (sorteio por operacao). Um campo de 100 caracteres, distribuicao uniforme. Carga inicial via YCSB em strong com 1 thread e ate 5 retries por registro, fora da medicao. Cada caso usa uma copia identica dessa base, novos processos e portas locais livres. Execucoes sequenciais, sem aquecimento dedicado, com logs em arquivos. Throughput e latencia sao os do cliente YCSB; a espera posterior pela convergencia nao entra no tempo medido. Latencias exibidas em milissegundos (YCSB exporta microssegundos). A convergencia compara todos os valores e versoes persistidos; nao comprova, por si so, as garantias de consistencia. Resultados locais exploratorios, sujeitos a variacao de carga do computador; nao ha intervalo de confianca com uma unica rodada.
+1000 registros; 1000 operacoes por execucao; 8 threads; 10 rodada(s); atraso assincrono de 1.0 s. Escrita = UPDATE; misto = 50% READ / 50% UPDATE (sorteio por operacao). Um campo de 100 caracteres, distribuicao uniforme. Carga inicial via YCSB em strong com 1 thread e ate 5 retries por registro, fora da medicao. Cada caso usa uma copia identica dessa base, novos processos e portas locais livres. Execucoes sequenciais, sem aquecimento dedicado, com logs em arquivos. Throughput e latencia sao os do cliente YCSB; a espera posterior pela convergencia nao entra no tempo medido. Latencias exibidas em milissegundos (YCSB exporta microssegundos). A convergencia compara todos os valores e versoes persistidos; nao comprova, por si so, as garantias de consistencia. Resultados locais exploratorios, sujeitos a variacao de carga do computador; nao ha intervalo de confianca com uma unica rodada.
 
 | Carga | Modo | Rodada | Ops/s | Tempo (s) | Leitura media (ms) | Leitura p95 (ms) | Escrita media (ms) | Escrita p95 (ms) | OK | Erros | Espera convergencia (s) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -13,6 +13,87 @@
 | misto | strong | 1 | 9.45 | 105.86 | 778.98 | 1297.41 | 909.73 | 1422.34 | 1000 | 0 | 0.01 |
 | misto | eventual | 1 | 38.98 | 25.65 | 50.91 | 101.69 | 334.16 | 459.52 | 1000 | 0 | 19.29 |
 | misto | ryw | 1 | 39.56 | 25.28 | 43.57 | 106.81 | 342.43 | 513.28 | 1000 | 0 | 16.24 |
+| leitura | eventual | 2 | 535.62 | 1.87 | 13.86 | 30.64 | — | — | 999 | 1 | 0.01 |
+| leitura | ryw | 2 | 484.26 | 2.06 | 16.16 | 30.09 | — | — | 998 | 2 | 0.03 |
+| leitura | strong | 2 | 35.65 | 28.05 | 223.57 | 284.16 | — | — | 999 | 1 | 0.00 |
+| escrita | eventual | 2 | 23.59 | 42.39 | — | — | 337.91 | 556.54 | 1000 | 0 | 22.94 |
+| escrita | ryw | 2 | 20.66 | 48.40 | — | — | 385.08 | 537.09 | 1000 | 0 | 23.28 |
+| escrita | strong | 2 | 7.82 | 127.82 | — | — | 1019.66 | 1308.67 | 999 | 1 | 0.08 |
+| misto | eventual | 2 | 35.56 | 28.12 | 51.16 | 115.58 | 353.36 | 611.84 | 1000 | 0 | 22.67 |
+| misto | ryw | 2 | 58.58 | 17.07 | 33.28 | 74.37 | 231.44 | 431.87 | 1000 | 0 | 10.73 |
+| misto | strong | 2 | 10.92 | 91.61 | 708.11 | 1020.41 | 754.84 | 1086.46 | 1000 | 0 | 0.01 |
+| leitura | ryw | 3 | 315.66 | 3.17 | 17.40 | 42.08 | — | — | 999 | 1 | 0.01 |
+| leitura | strong | 3 | 31.78 | 31.47 | 250.94 | 323.58 | — | — | 999 | 1 | 0.01 |
+| leitura | eventual | 3 | 469.92 | 2.13 | 16.18 | 33.15 | — | — | 997 | 3 | 0.01 |
+| escrita | ryw | 3 | 17.49 | 57.16 | — | — | 455.97 | 845.82 | 998 | 2 | 33.02 |
+| escrita | strong | 3 | 7.81 | 128.02 | — | — | 1021.18 | 1538.05 | 1000 | 0 | 0.04 |
+| escrita | eventual | 3 | 18.34 | 54.52 | — | — | 435.17 | 694.78 | 998 | 2 | 30.13 |
+| misto | ryw | 3 | 41.28 | 24.22 | 47.29 | 125.89 | 324.93 | 572.93 | 999 | 1 | 18.25 |
+| misto | strong | 3 | 14.42 | 69.35 | 519.47 | 1008.64 | 584.29 | 1221.63 | 1000 | 0 | 0.05 |
+| misto | eventual | 3 | 35.44 | 28.21 | 55.57 | 134.53 | 358.39 | 643.07 | 1000 | 0 | 19.99 |
+| leitura | strong | 4 | 44.80 | 22.32 | 177.69 | 244.22 | — | — | 1000 | 0 | 0.01 |
+| leitura | eventual | 4 | 532.48 | 1.88 | 14.14 | 26.32 | — | — | 1000 | 0 | 0.01 |
+| leitura | ryw | 4 | 508.65 | 1.97 | 13.87 | 22.64 | — | — | 997 | 3 | 0.01 |
+| escrita | strong | 4 | 6.60 | 151.63 | — | — | 1210.01 | 1516.54 | 999 | 1 | 0.21 |
+| escrita | eventual | 4 | 17.25 | 57.98 | — | — | 462.08 | 762.37 | 1000 | 0 | 28.84 |
+| escrita | ryw | 4 | 22.71 | 44.04 | — | — | 351.09 | 605.18 | 1000 | 0 | 18.71 |
+| misto | strong | 4 | 11.91 | 83.95 | 655.95 | 1040.38 | 681.16 | 1075.20 | 1000 | 0 | 0.09 |
+| misto | eventual | 4 | 37.90 | 26.38 | 52.34 | 133.38 | 336.18 | 593.92 | 1000 | 0 | 18.49 |
+| misto | ryw | 4 | 59.31 | 16.86 | 32.07 | 70.97 | 235.06 | 539.65 | 1000 | 0 | 12.07 |
+| leitura | eventual | 5 | 538.50 | 1.86 | 14.51 | 27.21 | — | — | 978 | 22 | 0.01 |
+| leitura | ryw | 5 | 378.93 | 2.64 | 17.02 | 30.80 | — | — | 996 | 4 | 0.01 |
+| leitura | strong | 5 | 46.06 | 21.71 | 173.15 | 246.53 | — | — | 998 | 2 | 0.01 |
+| escrita | eventual | 5 | 18.51 | 54.04 | — | — | 431.72 | 718.34 | 998 | 2 | 31.03 |
+| escrita | ryw | 5 | 16.69 | 59.91 | — | — | 476.91 | 760.32 | 998 | 2 | 25.80 |
+| escrita | strong | 5 | 8.33 | 120.07 | — | — | 956.81 | 1302.53 | 1000 | 0 | 0.06 |
+| misto | eventual | 5 | 41.81 | 23.92 | 50.61 | 127.04 | 320.56 | 693.25 | 1000 | 0 | 16.83 |
+| misto | ryw | 5 | 42.48 | 23.54 | 46.89 | 108.42 | 328.55 | 650.75 | 1000 | 0 | 14.00 |
+| misto | strong | 5 | 13.01 | 76.84 | 593.47 | 963.58 | 633.18 | 1007.10 | 1000 | 0 | 0.01 |
+| leitura | ryw | 6 | 398.57 | 2.51 | 16.49 | 29.65 | — | — | 998 | 2 | 0.01 |
+| leitura | strong | 6 | 47.68 | 20.97 | 167.00 | 256.89 | — | — | 999 | 1 | 0.01 |
+| leitura | eventual | 6 | 577.37 | 1.73 | 13.15 | 22.85 | — | — | 999 | 1 | 0.01 |
+| escrita | ryw | 6 | 17.13 | 58.37 | — | — | 465.85 | 742.40 | 998 | 2 | 25.21 |
+| escrita | strong | 6 | 7.15 | 139.76 | — | — | 1114.97 | 1382.40 | 1000 | 0 | 0.06 |
+| escrita | eventual | 6 | 30.46 | 32.83 | — | — | 261.87 | 531.46 | 998 | 2 | 19.40 |
+| misto | ryw | 6 | 35.85 | 27.89 | 55.59 | 150.78 | 363.71 | 741.38 | 1000 | 0 | 17.27 |
+| misto | strong | 6 | 13.46 | 74.31 | 581.35 | 941.57 | 605.14 | 939.52 | 1000 | 0 | 0.06 |
+| misto | eventual | 6 | 39.09 | 25.58 | 55.32 | 127.74 | 333.13 | 678.91 | 1000 | 0 | 18.81 |
+| leitura | strong | 7 | 44.00 | 22.73 | 180.66 | 254.08 | — | — | 1000 | 0 | 0.01 |
+| leitura | eventual | 7 | 515.73 | 1.94 | 14.97 | 28.37 | — | — | 988 | 12 | 0.01 |
+| leitura | ryw | 7 | 301.30 | 3.32 | 22.03 | 40.16 | — | — | 998 | 2 | 0.03 |
+| escrita | strong | 7 | 8.75 | 114.34 | — | — | 911.74 | 1303.55 | 999 | 1 | 0.39 |
+| escrita | eventual | 7 | 20.84 | 47.98 | — | — | 381.81 | 630.78 | 998 | 2 | 27.82 |
+| escrita | ryw | 7 | 17.04 | 58.70 | — | — | 467.00 | 800.77 | 999 | 1 | 26.06 |
+| misto | strong | 7 | 12.26 | 81.58 | 625.78 | 969.22 | 675.62 | 1016.32 | 1000 | 0 | 0.00 |
+| misto | eventual | 7 | 42.75 | 23.39 | 53.48 | 175.23 | 309.14 | 614.91 | 1000 | 0 | 17.76 |
+| misto | ryw | 7 | 39.93 | 25.04 | 47.90 | 117.38 | 325.00 | 640.00 | 1000 | 0 | 18.84 |
+| leitura | eventual | 8 | 527.98 | 1.89 | 14.12 | 27.33 | — | — | 998 | 2 | 0.01 |
+| leitura | ryw | 8 | 303.03 | 3.30 | 19.92 | 38.34 | — | — | 999 | 1 | 0.01 |
+| leitura | strong | 8 | 48.79 | 20.49 | 163.35 | 246.27 | — | — | 998 | 2 | 0.01 |
+| escrita | eventual | 8 | 23.65 | 42.27 | — | — | 336.98 | 627.71 | 998 | 2 | 21.09 |
+| escrita | ryw | 8 | 27.07 | 36.94 | — | — | 294.62 | 541.18 | 999 | 1 | 19.57 |
+| escrita | strong | 8 | 9.65 | 103.61 | — | — | 825.53 | 1252.35 | 999 | 1 | 0.08 |
+| misto | eventual | 8 | 48.64 | 20.56 | 44.41 | 130.50 | 286.54 | 633.34 | 1000 | 0 | 11.26 |
+| misto | ryw | 8 | 43.58 | 22.95 | 45.57 | 123.71 | 314.49 | 648.70 | 1000 | 0 | 14.31 |
+| misto | strong | 8 | 12.48 | 80.15 | 615.86 | 983.04 | 659.58 | 1059.84 | 1000 | 0 | 0.00 |
+| leitura | ryw | 9 | 533.05 | 1.88 | 13.09 | 22.64 | — | — | 995 | 5 | 0.00 |
+| leitura | strong | 9 | 45.17 | 22.14 | 176.33 | 263.68 | — | — | 999 | 1 | 0.01 |
+| leitura | eventual | 9 | 520.02 | 1.92 | 14.68 | 30.73 | — | — | 1000 | 0 | 0.01 |
+| escrita | ryw | 9 | 17.63 | 56.73 | — | — | 452.46 | 743.42 | 1000 | 0 | 19.80 |
+| escrita | strong | 9 | 8.91 | 112.19 | — | — | 893.25 | 1311.74 | 1000 | 0 | 0.04 |
+| escrita | eventual | 9 | 19.76 | 50.60 | — | — | 403.08 | 676.86 | 1000 | 0 | 28.01 |
+| misto | ryw | 9 | 35.61 | 28.08 | 50.01 | 134.01 | 373.54 | 686.08 | 1000 | 0 | 18.39 |
+| misto | strong | 9 | 13.97 | 71.60 | 546.43 | 878.08 | 595.16 | 984.58 | 1000 | 0 | 0.00 |
+| misto | eventual | 9 | 42.38 | 23.59 | 52.09 | 126.21 | 307.08 | 501.76 | 1000 | 0 | 16.17 |
+| leitura | strong | 10 | 45.76 | 21.85 | 173.77 | 247.42 | — | — | 998 | 2 | 0.01 |
+| leitura | eventual | 10 | 551.57 | 1.81 | 13.57 | 31.05 | — | — | 998 | 2 | 0.00 |
+| leitura | ryw | 10 | 396.20 | 2.52 | 16.36 | 30.56 | — | — | 999 | 1 | 0.00 |
+| escrita | strong | 10 | 9.01 | 111.03 | — | — | 883.90 | 1511.42 | 998 | 2 | 0.15 |
+| escrita | eventual | 10 | 18.84 | 53.09 | — | — | 423.76 | 697.34 | 999 | 1 | 29.37 |
+| escrita | ryw | 10 | 18.86 | 53.02 | — | — | 422.87 | 758.27 | 998 | 2 | 18.72 |
+| misto | strong | 10 | 12.76 | 78.35 | 606.44 | 926.72 | 643.21 | 1013.25 | 1000 | 0 | 0.01 |
+| misto | eventual | 10 | 42.48 | 23.54 | 55.78 | 137.73 | 315.40 | 633.34 | 1000 | 0 | 15.79 |
+| misto | ryw | 10 | 39.59 | 25.26 | 48.71 | 114.62 | 324.39 | 512.25 | 1000 | 0 | 15.63 |
 
 Ambiente: Windows-11-10.0.26200-SP0; Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]; Java: java version "21.0.7" 2025-04-15 LTS
 
