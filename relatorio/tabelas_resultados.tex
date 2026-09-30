@@ -1,0 +1,49 @@
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{table}[htbp]\centering
+\caption{Throughput: média e DP de dez rodadas; erros em 30.000 operações por modo.}
+\begin{tabular}{lllll}
+\toprule
+Modo & Leitura (ops/s) & Escrita (ops/s) & Misto (ops/s) & Erros\\\midrule
+strong & 41,79 $\pm$ 7,20 & 7,87 $\pm$ 1,46 & 12,46 $\pm$ 1,46 & 30\\
+eventual & 498,35 $\pm$ 103,50 & 21,22 $\pm$ 3,89 & 40,50 $\pm$ 3,97 & 56\\
+ryw & 383,85 $\pm$ 101,94 & 19,96 $\pm$ 3,62 & 43,58 $\pm$ 8,48 & 36\\
+\bottomrule\end{tabular}\end{table}
+\endgroup
+
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{table}[htbp]\centering
+\caption{Tempo médio medido, espera posterior média e erros em 10.000 operações por cenário.}
+\begin{tabular}{llllll}
+\toprule
+Carga & Modo & Tempo (s) & Espera (s) & Erros & Erros (\%)\\\midrule
+leitura & strong & 24,72 & 0,01 & 10 & 0,10\\
+leitura & eventual & 2,17 & 0,01 & 45 & 0,45\\
+leitura & ryw & 2,79 & 0,01 & 23 & 0,23\\
+escrita & strong & 132,38 & 0,13 & 20 & 0,20\\
+escrita & eventual & 48,34 & 26,72 & 11 & 0,11\\
+escrita & ryw & 51,43 & 23,22 & 12 & 0,12\\
+misto & strong & 81,36 & 0,02 & 0 & 0,00\\
+misto & eventual & 24,90 & 17,71 & 0 & 0,00\\
+misto & ryw & 23,62 & 15,57 & 1 & 0,01\\
+\bottomrule\end{tabular}\end{table}
+\endgroup
+
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{table}[htbp]\centering
+\caption{Latências em ms: médias entre rodadas. L = leitura; E = escrita. Traço indica operação ausente.}
+\begin{tabular}{llllll}
+\toprule
+Carga & Modo & L média & L p95 & E média & E p95\\\midrule
+leitura & strong & 196,90 & 275,67 & --- & ---\\
+leitura & eventual & 16,31 & 34,39 & --- & ---\\
+leitura & ryw & 18,27 & 34,85 & --- & ---\\
+escrita & strong & --- & --- & 1052,94 & 1603,38\\
+escrita & eventual & --- & --- & 385,44 & 639,44\\
+escrita & ryw & --- & --- & 409,94 & 683,21\\
+misto & strong & 623,18 & 1002,90 & 674,19 & 1082,62\\
+misto & eventual & 52,17 & 130,96 & 325,39 & 606,39\\
+misto & ryw & 45,09 & 112,70 & 316,35 & 593,69\\
+\bottomrule\end{tabular}\end{table}
+\endgroup
+
+\clearpage

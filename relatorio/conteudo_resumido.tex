@@ -1,0 +1,284 @@
+\section{Como o sistema funciona}
+O projeto guarda os mesmos dados em três réplicas, cada uma com seu próprio
+arquivo JSON. O cliente envia os pedidos a um coordenador, que decide onde
+ler e gravar conforme o modo escolhido: strong, eventual ou Read Your Writes
+(RYW, que significa ``ler as próprias escritas''). A comunicação usa HTTP.
+
+O coordenador foi implementado em \texttt{coordenador.py}, e cada réplica
+executa \texttt{replica.py}. Na configuração manual, o coordenador atende na
+porta 5000 e as réplicas nas portas 5001, 5002 e 5003. Uma escrita envia a
+chave e o valor por \texttt{POST /write}; uma leitura usa
+\texttt{GET /read?chave=...}. O cliente acessa o coordenador, que encaminha
+esses pedidos às réplicas.
+
+Cada registro contém o valor e um número de versão. Para ler, a réplica abre
+o JSON e procura a chave. Para escrever, lê o arquivo inteiro, altera o
+registro e grava novamente o conteúdo. Primeiro, salva em um arquivo
+temporário, usa \texttt{flush} e \texttt{fsync} para enviar os dados ao
+armazenamento e depois substitui o arquivo antigo com \texttt{os.replace}.
+Isso evita deixar um JSON gravado pela metade. Um bloqueio organiza o acesso
+quando chegam várias operações ao mesmo tempo.
+
+\section{Como o eventual foi implementado}
+O eventual permite que as réplicas tenham valores diferentes por um tempo,
+enquanto as atualizações são enviadas. O caminho de uma escrita é:
+\begin{enumerate}
+\item O coordenador escolhe uma réplica por rodízio: 1, 2, 3, 1, e assim por diante.
+\item Cria uma versão para a escrita e envia a chave, o valor e a versão à réplica.
+\item Se ela confirmar a gravação, coloca uma tarefa na fila para atualizar as outras duas.
+\item Responde sucesso ao cliente, sem esperar essas duas atualizações.
+\end{enumerate}
+
+As leituras também alternam entre réplicas, usando o mesmo contador de
+rodízio das escritas. Elas consultam somente a cópia escolhida, sem comparar
+com as demais. Por isso, uma leitura logo após uma escrita pode devolver
+o valor antigo ou até 404, caso a chave ainda não tenha chegado àquela réplica.
+
+Por exemplo, se todas as cópias guardam 50 e uma escrita muda a réplica 1
+para 80, o cliente já pode receber sucesso. Uma leitura da réplica 2 ainda
+pode devolver 50 até ela ser atualizada. Depois da propagação, as três terão
+80, desde que outra escrita mais nova não tenha substituído esse valor.
+
+\subsection{Fila e tempo de sincronização}
+
+A sincronização usa uma fila de prioridade em memória, implementada com
+\texttt{heapq}. Cada tarefa guarda a chave, o valor, a versão e os destinos.
+O horário em que a tarefa pode começar define sua posição na fila. Uma única
+thread de replicação espera esse horário e envia as atualizações por HTTP,
+um destino por vez. As réplicas não trocam dados diretamente entre si.
+
+O atraso é definido por \texttt{--replication-delay}. Seu valor padrão,
+também usado nos testes, é de 1 segundo,
+contado a partir do agendamento após a tentativa de escrita inicial.
+Esse é o tempo até o envio poder começar, e não um prazo para as três cópias
+ficarem iguais: a fila, os bloqueios e as gravações podem aumentar a espera.
+
+O agendamento usa \texttt{time.monotonic()}, um relógio usado para medir
+intervalos. O programa não espera mais um segundo inteiro entre todas as
+tarefas: se várias já estiverem prontas, pode atendê-las em sequência.
+Com atraso zero, o envio começa assim que houver capacidade, mas continua
+sendo feito em segundo plano.
+
+Mesmo no eventual, as escritas iniciais passam por um bloqueio global.
+A thread de replicação não usa esse bloqueio nesse modo, mas disputa os
+bloqueios de cada réplica com as outras operações. Assim, aumentar a carga
+pode fazer a fila crescer e atrasar a sincronização.
+
+\subsection{Versões e tratamento de falhas}
+
+Se um envio falhar, ele é agendado novamente, neste caso com atraso de
+1 segundo. Somente os destinos que falharam entram nessa nova tentativa.
+A regra geral é esperar o maior valor entre 0,1 segundo e o atraso configurado.
+O timeout de comunicação com cada réplica é de 2 segundos. Esse limite não
+inclui toda a espera na fila e nos bloqueios, portanto uma operação completa
+pode demorar mais.
+
+A versão de uma escrita é o maior valor entre o horário atual em nanossegundos
+e a última versão criada mais um. Isso faz as versões crescerem durante a
+execução do coordenador. A réplica recusa uma versão menor que a já salva.
+Se receber novamente a mesma versão com o mesmo valor, confirma sem regravar;
+se a versão for igual, mas o valor for diferente, retorna conflito.
+Essa proteção evita que um envio atrasado substitua um dado mais novo.
+
+As tentativas continuam enquanto a escrita ainda for a mais nova da chave
+e o coordenador estiver ativo. Quando chega uma escrita mais nova para a
+mesma chave, as tarefas antigas deixam de ser propagadas, e a nova passa
+a ser responsável pela atualização.
+
+Se a própria escrita inicial falhar, o cliente recebe 503 e o coordenador
+agenda o envio para todas as réplicas, inclusive a origem. Isso acontece
+porque um timeout pode ocorrer depois de a réplica já ter gravado o valor.
+Portanto, receber erro não significa que a escrita foi cancelada: ela pode
+ser concluída pelas novas tentativas.
+
+A fila fica em memória e pode ser perdida se o coordenador for encerrado.
+O programa não reconstrói essa fila ao reiniciar e não faz uma comparação
+periódica de todos os arquivos para corrigir qualquer diferença.
+
+\section{Como o RYW foi implementado}
+O RYW usa a mesma sincronização do eventual, mas mantém cada cliente em uma
+réplica fixa. O coordenador usa o identificador enviado no cabeçalho
+\texttt{X-Client-ID} para escolher essa réplica por meio de um hash SHA-256.
+O mesmo identificador e a mesma lista ordenada de réplicas levam ao mesmo destino.
+
+O código calcula SHA-256 do identificador, transforma os primeiros oito bytes
+em um número inteiro e usa o resto da divisão pela quantidade de réplicas.
+Com três réplicas, o resultado escolhe uma das posições 0, 1 ou 2 da lista.
+Clientes diferentes podem cair na mesma réplica; a distribuição não precisa
+ficar perfeitamente equilibrada.
+
+Depois dessa escolha, a escrita segue o mesmo processo do eventual: confirma
+na réplica escolhida, agenda as outras e responde. O RYW não usa uma fila
+mais rápida nem um tempo de sincronização diferente. A mudança está em
+manter a escrita e a leitura do cliente no mesmo destino.
+
+Como a escrita e a leitura do cliente vão para a mesma cópia, depois de uma
+escrita confirmada ele consegue ler o que escreveu, ou um valor mais novo.
+Outros clientes ainda podem encontrar cópias atrasadas. O identificador é
+obrigatório e deve ser mantido entre os pedidos. Se a réplica fixa estiver
+indisponível, o sistema retorna erro em vez de consultar uma cópia possivelmente
+desatualizada.
+
+Por exemplo, se o cliente A estiver associado à réplica 2, ele grava 80 nessa
+cópia e sua próxima leitura também consulta a réplica 2. Já um cliente B,
+associado à réplica 3, pode continuar lendo 50 até a atualização chegar.
+Isso mostra que o RYW protege a sequência de operações de cada cliente,
+mas não faz todos os clientes enxergarem imediatamente a mesma informação.
+
+O código não guarda uma tabela com a última versão de cada cliente. A
+garantia vem da réplica fixa, da confirmação da escrita nela e da recusa
+de versões antigas. Sem \texttt{X-Client-ID}, o coordenador retorna 400.
+Trocar o identificador ou a ordem da lista de réplicas pode mudar o destino
+e comprometer essa garantia. No YCSB, cada thread usa um identificador UUID
+estável nos seus pedidos, permitindo testar esse modo.
+
+\section{Como os testes foram feitos}
+Os resultados salvos foram obtidos com YCSB, usando 1.000 registros,
+1.000 operações por execução e oito threads. Foram dez rodadas para cada
+combinação de modo e carga: leitura, escrita e mista, com 50\% de probabilidade
+para cada operação. Isso totaliza 90 execuções e 90.000 operações.
+Cada registro tinha um campo de 100 caracteres, com escolha uniforme das chaves.
+
+Todos os processos rodaram no mesmo computador, com Windows 11, Python 3.13.7
+e Java 21.0.7. Cada caso começou com uma cópia da mesma base, já sincronizada,
+e novos processos. A carga inicial ficou fora da medição. Não houve uma etapa
+separada de aquecimento antes dos testes.
+
+O binding, que liga o YCSB à API do coordenador, transforma INSERT e UPDATE
+em pedidos de escrita e READ em pedidos de leitura. A carga medida de escrita
+usa UPDATE, ou seja, atualizações de registros existentes. No teste misto,
+as operações são sorteadas: 50\% é a probabilidade, não uma exigência de
+exatamente 500 leituras e 500 escritas em cada rodada.
+
+Os casos foram executados um por vez, alternando a ordem dos modos entre
+rodadas. As médias dão o mesmo peso a cada rodada. O throughput indica
+operações por segundo e inclui as que retornaram erro. Já as latências
+apresentadas são os tempos das operações bem-sucedidas. O desvio-padrão
+(DP) mostra quanto os resultados variaram de uma rodada para outra.
+
+\section{Resultados e comparações}
+
+\begin{table}[htbp]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\caption{Operações por segundo: média $\pm$ DP; erros nas 30.000 operações de cada modo.}
+\begin{tabular}{llllr}
+\toprule
+Modo & Leitura & Escrita & Mista & Erros\\\midrule
+strong & 41,79 $\pm$ 7,20 & 7,87 $\pm$ 1,46 & 12,46 $\pm$ 1,46 & 30\\
+eventual & 498,35 $\pm$ 103,50 & 21,22 $\pm$ 3,89 & 40,50 $\pm$ 3,97 & 56\\
+ryw & 383,85 $\pm$ 101,94 & 19,96 $\pm$ 3,62 & 43,58 $\pm$ 8,48 & 36\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Quanto maior a quantidade de operações por segundo, maior a taxa de atendimento.
+O eventual teve a maior média em leitura e escrita, enquanto o RYW teve a
+maior média na carga mista.
+
+\textbf{O strong demorou mais porque espera mais confirmações antes de
+responder e limita mais as operações simultâneas.} Uma escrita nele só
+recebe sucesso após a confirmação das três réplicas. Uma leitura consulta
+as três e compara seus valores. Os pedidos às réplicas são feitos um após
+o outro, e um bloqueio global faz as leituras e escritas do coordenador
+esperarem umas pelas outras. Eventual e RYW aguardam uma réplica na escrita
+e consultam uma na leitura, deixando a propagação restante em segundo plano.
+
+O JSON também pesa nessa diferença: a escrita regrava o arquivo inteiro,
+e o strong espera esse trabalho nas três cópias. Se uma escrita falhar
+parcialmente, ele retorna erro, tenta sincronizar novamente e bloqueia a
+leitura daquela chave até a recuperação. Leituras com valores diferentes
+entre as réplicas retornam conflito. Essa proteção depende de um único
+coordenador e do acesso dos clientes por ele, com a base inicialmente coerente.
+
+\subsection{Leitura}
+O eventual atingiu 498,35 ops/s, contra 383,85 no RYW e 41,79 no strong.
+Em relação ao strong, isso representa cerca de 11,93 vezes a taxa no eventual
+e 9,19 vezes no RYW. O tempo médio de resposta foi de 196,90 ms no strong,
+16,31 ms no eventual e 18,27 ms no RYW.
+
+Consultar uma única cópia ajuda a explicar o ganho dos modos assíncronos.
+O eventual ficou cerca de 29,83\% acima do RYW na média. O rodízio do eventual
+e o destino fixo por cliente do RYW podem distribuir a carga de formas
+diferentes, mas os testes não mediram esse efeito separadamente. Como os
+identificadores são distribuídos por hash, as oito threads do RYW não precisam
+ficar igualmente divididas entre as três réplicas.
+
+\subsection{Escrita}
+O eventual atingiu 21,22 ops/s e o RYW 19,96 ops/s, contra 7,87 ops/s no strong.
+São aproximadamente 2,70 e 2,54 vezes a taxa do strong. Os tempos médios
+de resposta foram 1.052,94 ms no strong, 385,44 ms no eventual e 409,94 ms no RYW.
+
+O ganho ocorre porque o cliente recebe a resposta após uma confirmação,
+enquanto as outras cópias ainda serão atualizadas. Isso melhora o tempo de
+resposta, mas não elimina o custo de manter as três réplicas: parte dele
+aparece na espera pela sincronização após o teste.
+
+\subsection{Carga mista}
+O RYW atingiu 43,58 ops/s, o eventual 40,50 ops/s e o strong 12,46 ops/s.
+As taxas do RYW e do eventual foram cerca de 3,50 e 3,25 vezes a do strong.
+O RYW ficou 7,59\% acima do eventual na média, mas também variou mais:
+seu DP foi de 8,48 ops/s, contra 3,97 ops/s no eventual. Essa diferença
+não basta para afirmar que ele sempre será melhor.
+
+O tempo médio de leitura foi de 623,18 ms no strong, 52,17 ms no eventual
+e 45,09 ms no RYW. Para a escrita, foi de 674,19 ms, 325,39 ms e 316,35 ms,
+respectivamente. O aumento da latência de leitura do strong em relação ao
+teste só de leitura é compatível com a espera por escritas no bloqueio global.
+Essa é uma explicação baseada no código; o tempo gasto no bloqueio não foi
+medido isoladamente.
+
+\subsection{Tempo para as réplicas ficarem iguais}
+As três réplicas ficaram iguais ao final de todas as 90 execuções.
+Depois do teste de escrita, a espera média adicional foi de 0,13 s no strong,
+26,72 s no eventual e 23,22 s no RYW. Na carga mista, foi de 0,02 s,
+17,71 s e 15,57 s, respectivamente. Isso mostra por que o atraso configurado
+de 1 segundo não deve ser confundido com o tempo total de sincronização.
+
+Essa espera foi medida após o YCSB terminar, comparando os valores e versões
+dos arquivos, com novas verificações a cada 0,25 s quando havia diferenças.
+Ela não entra nas taxas de operações por segundo e não mede o atraso de cada
+escrita. Uma parte do ganho dos modos assíncronos vem de responder ao cliente
+antes de terminar todo o trabalho de replicação.
+
+No teste somente de escrita, a duração média da fase medida foi de 132,38 s
+no strong, 48,34 s no eventual e 51,43 s no RYW. Somando a espera posterior,
+os tempos ficam em aproximadamente 132,51 s, 75,06 s e 74,65 s. Essa conta
+ajuda a comparar o trabalho até a igualdade observada das cópias, mas não
+inclui toda a preparação dos processos e não substitui o throughput do YCSB.
+
+\subsection{Erros e limites da comparação}
+O total de erros foi de 30 no strong, 56 no eventual e 36 no RYW, em
+30.000 operações por modo. As taxas do YCSB incluem operações que falharam.
+Esses erros, sozinhos, não mostram quantas leituras devolveram valores antigos.
+Da mesma forma, encontrar as cópias iguais ao final não prova que todas as
+leituras durante o teste respeitaram as garantias de consistência.
+
+Na carga de leitura, houve 10 erros no strong, 45 no eventual e 23 no RYW.
+Na escrita, foram 20, 11 e 12; na carga mista, zero, zero e um, respectivamente.
+A base da carga somente de leitura já estava sincronizada e não recebia
+escritas, portanto seus erros não devem ser tratados como medida de atraso
+de replicação. O binding distingue respostas como NOT\_FOUND e
+SERVICE\_UNAVAILABLE, mas falhas de comunicação também podem virar ERROR.
+Os totais não identificam sozinhos a causa de cada falha.
+
+Os testes foram locais, em sessões diferentes, sem controle completo da carga
+do computador e sem simulação planejada de falhas de rede. O atraso de
+1 segundo foi aplicado ao replicador, não à rede inteira. Os resultados
+descrevem esse ambiente e esse armazenamento em JSON; não devem ser tratados
+como desempenho geral de qualquer sistema com esses modelos de consistência.
+
+Os resultados são de testes já existentes. Os identificadores do conteúdo
+dos arquivos de código (hashes) atuais diferem dos registrados nesses testes.
+Por isso, as explicações descrevem o código disponível, mas não foi possível
+confirmar que ele é exatamente a mesma versão usada nas medições.
+
+\section{Conclusão}
+O strong teve menos operações por segundo e respostas mais lentas porque
+espera as três cópias e organiza as operações uma de cada vez no coordenador.
+O eventual e o RYW respondem após uma confirmação e sincronizam o restante
+em segundo plano, mas podem deixar trabalho pendente depois do teste.
+O eventual pode devolver um valor antigo após uma escrita; o RYW evita isso
+para o mesmo cliente ao mantê-lo na réplica onde sua escrita foi confirmada.
+A escolha depende de quanto a aplicação precisa que os dados estejam
+atualizados no momento da leitura.

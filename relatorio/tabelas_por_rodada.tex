@@ -1,0 +1,249 @@
+As tabelas abaixo mostram os resultados de cada rodada. Nas 90 execuções, a verificação final encontrou as três réplicas iguais. Um tempo arredondado para 0,00 s ainda pode ter sido maior que zero.
+\subsection{Testes de leitura}
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{lllllll}
+\caption{Resultados individuais: leitura.}\\
+\toprule
+Modo & Rodada & ops/s & Tempo (s) & OK & Erros & Espera (s)\\\midrule\endfirsthead
+\toprule
+Modo & Rodada & ops/s & Tempo (s) & OK & Erros & Espera (s)\\\midrule\endhead
+\bottomrule\endfoot
+strong & 1 & 28,16 & 35,51 & 1000 & 0 & 0,00\\
+strong & 2 & 35,65 & 28,05 & 999 & 1 & 0,00\\
+strong & 3 & 31,78 & 31,47 & 999 & 1 & 0,01\\
+strong & 4 & 44,80 & 22,32 & 1000 & 0 & 0,01\\
+strong & 5 & 46,06 & 21,71 & 998 & 2 & 0,01\\
+strong & 6 & 47,68 & 20,97 & 999 & 1 & 0,01\\
+strong & 7 & 44,00 & 22,73 & 1000 & 0 & 0,01\\
+strong & 8 & 48,79 & 20,49 & 998 & 2 & 0,01\\
+strong & 9 & 45,17 & 22,14 & 999 & 1 & 0,01\\
+strong & 10 & 45,76 & 21,85 & 998 & 2 & 0,01\\
+eventual & 1 & 214,27 & 4,67 & 998 & 2 & 0,05\\
+eventual & 2 & 535,62 & 1,87 & 999 & 1 & 0,01\\
+eventual & 3 & 469,92 & 2,13 & 997 & 3 & 0,01\\
+eventual & 4 & 532,48 & 1,88 & 1000 & 0 & 0,01\\
+eventual & 5 & 538,50 & 1,86 & 978 & 22 & 0,01\\
+eventual & 6 & 577,37 & 1,73 & 999 & 1 & 0,01\\
+eventual & 7 & 515,73 & 1,94 & 988 & 12 & 0,01\\
+eventual & 8 & 527,98 & 1,89 & 998 & 2 & 0,01\\
+eventual & 9 & 520,02 & 1,92 & 1000 & 0 & 0,01\\
+eventual & 10 & 551,57 & 1,81 & 998 & 2 & 0,00\\
+ryw & 1 & 218,87 & 4,57 & 998 & 2 & 0,01\\
+ryw & 2 & 484,26 & 2,06 & 998 & 2 & 0,03\\
+ryw & 3 & 315,66 & 3,17 & 999 & 1 & 0,01\\
+ryw & 4 & 508,65 & 1,97 & 997 & 3 & 0,01\\
+ryw & 5 & 378,93 & 2,64 & 996 & 4 & 0,01\\
+ryw & 6 & 398,57 & 2,51 & 998 & 2 & 0,01\\
+ryw & 7 & 301,30 & 3,32 & 998 & 2 & 0,03\\
+ryw & 8 & 303,03 & 3,30 & 999 & 1 & 0,01\\
+ryw & 9 & 533,05 & 1,88 & 995 & 5 & 0,00\\
+ryw & 10 & 396,20 & 2,52 & 999 & 1 & 0,00\\
+\end{longtable}
+\endgroup
+
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{llllll}
+\caption{Latências por rodada em ms: leitura.}\\
+\toprule
+Modo & Rodada & L média & L p95 & E média & E p95\\\midrule\endfirsthead
+\toprule
+Modo & Rodada & L média & L p95 & E média & E p95\\\midrule\endhead
+\bottomrule\endfoot
+strong & 1 & 282,53 & 389,89 & --- & ---\\
+strong & 2 & 223,57 & 284,16 & --- & ---\\
+strong & 3 & 250,94 & 323,58 & --- & ---\\
+strong & 4 & 177,69 & 244,22 & --- & ---\\
+strong & 5 & 173,15 & 246,53 & --- & ---\\
+strong & 6 & 167,00 & 256,89 & --- & ---\\
+strong & 7 & 180,66 & 254,08 & --- & ---\\
+strong & 8 & 163,35 & 246,27 & --- & ---\\
+strong & 9 & 176,33 & 263,68 & --- & ---\\
+strong & 10 & 173,77 & 247,42 & --- & ---\\
+eventual & 1 & 33,95 & 86,21 & --- & ---\\
+eventual & 2 & 13,86 & 30,64 & --- & ---\\
+eventual & 3 & 16,18 & 33,15 & --- & ---\\
+eventual & 4 & 14,14 & 26,32 & --- & ---\\
+eventual & 5 & 14,51 & 27,21 & --- & ---\\
+eventual & 6 & 13,15 & 22,85 & --- & ---\\
+eventual & 7 & 14,97 & 28,37 & --- & ---\\
+eventual & 8 & 14,12 & 27,33 & --- & ---\\
+eventual & 9 & 14,68 & 30,73 & --- & ---\\
+eventual & 10 & 13,57 & 31,05 & --- & ---\\
+ryw & 1 & 30,39 & 61,53 & --- & ---\\
+ryw & 2 & 16,16 & 30,09 & --- & ---\\
+ryw & 3 & 17,40 & 42,08 & --- & ---\\
+ryw & 4 & 13,87 & 22,64 & --- & ---\\
+ryw & 5 & 17,02 & 30,80 & --- & ---\\
+ryw & 6 & 16,49 & 29,65 & --- & ---\\
+ryw & 7 & 22,03 & 40,16 & --- & ---\\
+ryw & 8 & 19,92 & 38,34 & --- & ---\\
+ryw & 9 & 13,09 & 22,64 & --- & ---\\
+ryw & 10 & 16,36 & 30,56 & --- & ---\\
+\end{longtable}
+\endgroup
+
+\subsection{Testes de escrita}
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{lllllll}
+\caption{Resultados individuais: escrita.}\\
+\toprule
+Modo & Rodada & ops/s & Tempo (s) & OK & Erros & Espera (s)\\\midrule\endfirsthead
+\toprule
+Modo & Rodada & ops/s & Tempo (s) & OK & Erros & Espera (s)\\\midrule\endhead
+\bottomrule\endfoot
+strong & 1 & 4,64 & 215,31 & 986 & 14 & 0,23\\
+strong & 2 & 7,82 & 127,82 & 999 & 1 & 0,08\\
+strong & 3 & 7,81 & 128,02 & 1000 & 0 & 0,04\\
+strong & 4 & 6,60 & 151,63 & 999 & 1 & 0,21\\
+strong & 5 & 8,33 & 120,07 & 1000 & 0 & 0,06\\
+strong & 6 & 7,15 & 139,76 & 1000 & 0 & 0,06\\
+strong & 7 & 8,75 & 114,34 & 999 & 1 & 0,39\\
+strong & 8 & 9,65 & 103,61 & 999 & 1 & 0,08\\
+strong & 9 & 8,91 & 112,19 & 1000 & 0 & 0,04\\
+strong & 10 & 9,01 & 111,03 & 998 & 2 & 0,15\\
+eventual & 1 & 20,95 & 47,73 & 1000 & 0 & 28,61\\
+eventual & 2 & 23,59 & 42,39 & 1000 & 0 & 22,94\\
+eventual & 3 & 18,34 & 54,52 & 998 & 2 & 30,13\\
+eventual & 4 & 17,25 & 57,98 & 1000 & 0 & 28,84\\
+eventual & 5 & 18,51 & 54,04 & 998 & 2 & 31,03\\
+eventual & 6 & 30,46 & 32,83 & 998 & 2 & 19,40\\
+eventual & 7 & 20,84 & 47,98 & 998 & 2 & 27,82\\
+eventual & 8 & 23,65 & 42,27 & 998 & 2 & 21,09\\
+eventual & 9 & 19,76 & 50,60 & 1000 & 0 & 28,01\\
+eventual & 10 & 18,84 & 53,09 & 999 & 1 & 29,37\\
+ryw & 1 & 24,36 & 41,05 & 998 & 2 & 22,06\\
+ryw & 2 & 20,66 & 48,40 & 1000 & 0 & 23,28\\
+ryw & 3 & 17,49 & 57,16 & 998 & 2 & 33,02\\
+ryw & 4 & 22,71 & 44,04 & 1000 & 0 & 18,71\\
+ryw & 5 & 16,69 & 59,91 & 998 & 2 & 25,80\\
+ryw & 6 & 17,13 & 58,37 & 998 & 2 & 25,21\\
+ryw & 7 & 17,04 & 58,70 & 999 & 1 & 26,06\\
+ryw & 8 & 27,07 & 36,94 & 999 & 1 & 19,57\\
+ryw & 9 & 17,63 & 56,73 & 1000 & 0 & 19,80\\
+ryw & 10 & 18,86 & 53,02 & 998 & 2 & 18,72\\
+\end{longtable}
+\endgroup
+
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{llllll}
+\caption{Latências por rodada em ms: escrita.}\\
+\toprule
+Modo & Rodada & L média & L p95 & E média & E p95\\\midrule\endfirsthead
+\toprule
+Modo & Rodada & L média & L p95 & E média & E p95\\\midrule\endhead
+\bottomrule\endfoot
+strong & 1 & --- & --- & 1692,35 & 3606,53\\
+strong & 2 & --- & --- & 1019,66 & 1308,67\\
+strong & 3 & --- & --- & 1021,18 & 1538,05\\
+strong & 4 & --- & --- & 1210,01 & 1516,54\\
+strong & 5 & --- & --- & 956,81 & 1302,53\\
+strong & 6 & --- & --- & 1114,97 & 1382,40\\
+strong & 7 & --- & --- & 911,74 & 1303,55\\
+strong & 8 & --- & --- & 825,53 & 1252,35\\
+strong & 9 & --- & --- & 893,25 & 1311,74\\
+strong & 10 & --- & --- & 883,90 & 1511,42\\
+eventual & 1 & --- & --- & 380,01 & 498,18\\
+eventual & 2 & --- & --- & 337,91 & 556,54\\
+eventual & 3 & --- & --- & 435,17 & 694,78\\
+eventual & 4 & --- & --- & 462,08 & 762,37\\
+eventual & 5 & --- & --- & 431,72 & 718,34\\
+eventual & 6 & --- & --- & 261,87 & 531,46\\
+eventual & 7 & --- & --- & 381,81 & 630,78\\
+eventual & 8 & --- & --- & 336,98 & 627,71\\
+eventual & 9 & --- & --- & 403,08 & 676,86\\
+eventual & 10 & --- & --- & 423,76 & 697,34\\
+ryw & 1 & --- & --- & 327,59 & 497,66\\
+ryw & 2 & --- & --- & 385,08 & 537,09\\
+ryw & 3 & --- & --- & 455,97 & 845,82\\
+ryw & 4 & --- & --- & 351,09 & 605,18\\
+ryw & 5 & --- & --- & 476,91 & 760,32\\
+ryw & 6 & --- & --- & 465,85 & 742,40\\
+ryw & 7 & --- & --- & 467,00 & 800,77\\
+ryw & 8 & --- & --- & 294,62 & 541,18\\
+ryw & 9 & --- & --- & 452,46 & 743,42\\
+ryw & 10 & --- & --- & 422,87 & 758,27\\
+\end{longtable}
+\endgroup
+
+\subsection{Testes mistos}
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{lllllll}
+\caption{Resultados individuais: misto.}\\
+\toprule
+Modo & Rodada & ops/s & Tempo (s) & OK & Erros & Espera (s)\\\midrule\endfirsthead
+\toprule
+Modo & Rodada & ops/s & Tempo (s) & OK & Erros & Espera (s)\\\midrule\endhead
+\bottomrule\endfoot
+strong & 1 & 9,45 & 105,86 & 1000 & 0 & 0,01\\
+strong & 2 & 10,92 & 91,61 & 1000 & 0 & 0,01\\
+strong & 3 & 14,42 & 69,35 & 1000 & 0 & 0,05\\
+strong & 4 & 11,91 & 83,95 & 1000 & 0 & 0,09\\
+strong & 5 & 13,01 & 76,84 & 1000 & 0 & 0,01\\
+strong & 6 & 13,46 & 74,31 & 1000 & 0 & 0,06\\
+strong & 7 & 12,26 & 81,58 & 1000 & 0 & 0,00\\
+strong & 8 & 12,48 & 80,15 & 1000 & 0 & 0,00\\
+strong & 9 & 13,97 & 71,60 & 1000 & 0 & 0,00\\
+strong & 10 & 12,76 & 78,35 & 1000 & 0 & 0,01\\
+eventual & 1 & 38,98 & 25,65 & 1000 & 0 & 19,29\\
+eventual & 2 & 35,56 & 28,12 & 1000 & 0 & 22,67\\
+eventual & 3 & 35,44 & 28,21 & 1000 & 0 & 19,99\\
+eventual & 4 & 37,90 & 26,38 & 1000 & 0 & 18,49\\
+eventual & 5 & 41,81 & 23,92 & 1000 & 0 & 16,83\\
+eventual & 6 & 39,09 & 25,58 & 1000 & 0 & 18,81\\
+eventual & 7 & 42,75 & 23,39 & 1000 & 0 & 17,76\\
+eventual & 8 & 48,64 & 20,56 & 1000 & 0 & 11,26\\
+eventual & 9 & 42,38 & 23,59 & 1000 & 0 & 16,17\\
+eventual & 10 & 42,48 & 23,54 & 1000 & 0 & 15,79\\
+ryw & 1 & 39,56 & 25,28 & 1000 & 0 & 16,24\\
+ryw & 2 & 58,58 & 17,07 & 1000 & 0 & 10,73\\
+ryw & 3 & 41,28 & 24,22 & 999 & 1 & 18,25\\
+ryw & 4 & 59,31 & 16,86 & 1000 & 0 & 12,07\\
+ryw & 5 & 42,48 & 23,54 & 1000 & 0 & 14,00\\
+ryw & 6 & 35,85 & 27,89 & 1000 & 0 & 17,27\\
+ryw & 7 & 39,93 & 25,04 & 1000 & 0 & 18,84\\
+ryw & 8 & 43,58 & 22,95 & 1000 & 0 & 14,31\\
+ryw & 9 & 35,61 & 28,08 & 1000 & 0 & 18,39\\
+ryw & 10 & 39,59 & 25,26 & 1000 & 0 & 15,63\\
+\end{longtable}
+\endgroup
+
+\begingroup\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{llllll}
+\caption{Latências por rodada em ms: misto.}\\
+\toprule
+Modo & Rodada & L média & L p95 & E média & E p95\\\midrule\endfirsthead
+\toprule
+Modo & Rodada & L média & L p95 & E média & E p95\\\midrule\endhead
+\bottomrule\endfoot
+strong & 1 & 778,98 & 1297,41 & 909,73 & 1422,34\\
+strong & 2 & 708,11 & 1020,41 & 754,84 & 1086,46\\
+strong & 3 & 519,47 & 1008,64 & 584,29 & 1221,63\\
+strong & 4 & 655,95 & 1040,38 & 681,16 & 1075,20\\
+strong & 5 & 593,47 & 963,58 & 633,18 & 1007,10\\
+strong & 6 & 581,35 & 941,57 & 605,14 & 939,52\\
+strong & 7 & 625,78 & 969,22 & 675,62 & 1016,32\\
+strong & 8 & 615,86 & 983,04 & 659,58 & 1059,84\\
+strong & 9 & 546,43 & 878,08 & 595,16 & 984,58\\
+strong & 10 & 606,44 & 926,72 & 643,21 & 1013,25\\
+eventual & 1 & 50,91 & 101,69 & 334,16 & 459,52\\
+eventual & 2 & 51,16 & 115,58 & 353,36 & 611,84\\
+eventual & 3 & 55,57 & 134,53 & 358,39 & 643,07\\
+eventual & 4 & 52,34 & 133,38 & 336,18 & 593,92\\
+eventual & 5 & 50,61 & 127,04 & 320,56 & 693,25\\
+eventual & 6 & 55,32 & 127,74 & 333,13 & 678,91\\
+eventual & 7 & 53,48 & 175,23 & 309,14 & 614,91\\
+eventual & 8 & 44,41 & 130,50 & 286,54 & 633,34\\
+eventual & 9 & 52,09 & 126,21 & 307,08 & 501,76\\
+eventual & 10 & 55,78 & 137,73 & 315,40 & 633,34\\
+ryw & 1 & 43,57 & 106,81 & 342,43 & 513,28\\
+ryw & 2 & 33,28 & 74,37 & 231,44 & 431,87\\
+ryw & 3 & 47,29 & 125,89 & 324,93 & 572,93\\
+ryw & 4 & 32,07 & 70,97 & 235,06 & 539,65\\
+ryw & 5 & 46,89 & 108,42 & 328,55 & 650,75\\
+ryw & 6 & 55,59 & 150,78 & 363,71 & 741,38\\
+ryw & 7 & 47,90 & 117,38 & 325,00 & 640,00\\
+ryw & 8 & 45,57 & 123,71 & 314,49 & 648,70\\
+ryw & 9 & 50,01 & 134,01 & 373,54 & 686,08\\
+ryw & 10 & 48,71 & 114,62 & 324,39 & 512,25\\
+\end{longtable}
+\endgroup
